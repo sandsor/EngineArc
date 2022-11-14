@@ -5,7 +5,7 @@
 
 ObjLoader::ObjLoader()
 {
-    ReadFile("../3Dprog22/Assets/untitled.obj");
+    ReadFile("../EngineArc/Assets/untitled.obj");
     mMatrix.setToIdentity();
 }
 

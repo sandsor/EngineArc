@@ -5,7 +5,7 @@
 
 Terrain::Terrain()
 {
-    m_localBuffer = stbi_load("../3Dprog22/Assets/heightmap.bmp", &m_width, &m_height, (int*)NULL, 1);
+    m_localBuffer = stbi_load("../EngineArc/Assets/heightmap.bmp", &m_width, &m_height, (int*)NULL, 1);
     setPlane();
 }
 

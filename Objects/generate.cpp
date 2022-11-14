@@ -4,8 +4,8 @@
 
 Generate::Generate(): VisualObject()
 {
-//readFile("../3Dprog22/Coords.txt");
-    writeFile("../3Dprog22/Coords.txt");
+
+    writeFile("../EngineArc/Coords.txt");
 qDebug()<<n;
 
 }
@@ -156,7 +156,7 @@ void Generate::writeFile(std::string filnavn){
         inn.close();
 
     std::fstream out;
-    out.open("../3Dprog22/CompressedFile.txt", std::ios::out);
+    out.open("../EngineArc/CompressedFile.txt", std::ios::out);
              qDebug()<<"started Writing";
     if(out.is_open()){
     divide --;

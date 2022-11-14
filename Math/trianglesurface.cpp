@@ -153,7 +153,7 @@ float TriangleSurface::function(float x, float y)
 void TriangleSurface::volum()
 {
     std::fstream file;
-    file.open("../3Dprog22/matte_oblig1.txt", std::ios::out);
+    file.open("../EngineArc/matte_oblig1.txt", std::ios::out);
     if(file.is_open())
     {
         float xmin=0.0f, xmax=0.5f, ymin=0.0f, ymax=0.5f, h=0.005f, volume = 0.0f;
