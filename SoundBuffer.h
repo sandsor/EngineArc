@@ -4,14 +4,14 @@
 class SoundBuffer
 {
 public:
-	static SoundBuffer* get();
+    static SoundBuffer* get();
 
-	ALuint addSoundEffect(const char* filename);
-	bool removeSoundEffect(const ALuint& buffer);
+    ALuint addSoundEffect(const char* filename);
+    bool removeSoundEffect(const ALuint& buffer);
 
 private:
-	SoundBuffer();
-	~SoundBuffer();
+    SoundBuffer();
+    ~SoundBuffer();
 
-	std::vector<ALuint> p_SoundEffectBuffers;
+    std::vector<ALuint> p_SoundEffectBuffers;
 };
