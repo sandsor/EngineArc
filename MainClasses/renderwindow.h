@@ -108,8 +108,8 @@ private:
 
     SoundDevice* mysounddevice = SoundDevice::get(); 
 
-    uint32_t /*ALuint*/ sound1 = SoundBuffer::get()->addSoundEffect("D:\\diverse\\spell.ogg");
-    uint32_t /*ALuint*/ sound2 = SoundBuffer::get()->addSoundEffect("D:\\diverse\\magicfail.ogg");
+    uint32_t /*ALuint*/ sound1 = SoundBuffer::get()->addSoundEffect("../EngineArc/Assets/spell.ogg");
+    uint32_t /*ALuint*/ sound2 = SoundBuffer::get()->addSoundEffect("../EngineArc/Assets/magicfail.ogg");
 
     SoundSource mySpeaker;
 

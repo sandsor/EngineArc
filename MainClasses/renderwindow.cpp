@@ -118,11 +118,11 @@ void RenderWindow::init() {
     //NB: hardcoded path to files! You have to change this if you change directories for the project.
     //Qt makes a build-folder besides the project folder. That is why we go down one directory
     // (out of the build-folder) and then up into the project folder.
-        mShaderProgram[0] = new Shader("../3Dprog22/plainshader.vert", "../3Dprog22/plainshader.frag");
+        mShaderProgram[0] = new Shader("../EngineArc/plainshader.vert", "../EngineArc/plainshader.frag");
         mLogger->logText("Plain shader program id: " + std::to_string(mShaderProgram[0]->getProgram()) );
-        mShaderProgram[1]= new Shader("../3Dprog22/textureshader.vert", "../3Dprog22/textureshader.frag");
+        mShaderProgram[1]= new Shader("../EngineArc/textureshader.vert", "../EngineArc/textureshader.frag");
         mLogger->logText("Texture shader program id: " + std::to_string(mShaderProgram[1]->getProgram()) );
-        mShaderProgram[2]= new Shader("../3Dprog22/phongshader.vert", "../3Dprog22/phongshader.frag");
+        mShaderProgram[2]= new Shader("../EngineArc/phongshader.vert", "../EngineArc/phongshader.frag");
         mLogger->logText("Texture shader program id: " + std::to_string(mShaderProgram[2]->getProgram()) );
 
 
@@ -134,8 +134,8 @@ void RenderWindow::init() {
         //Returns a pointer to the Texture class. This reads and sets up the texture for OpenGL
         //and returns the Texture ID that OpenGL uses from Texture::id()
         mTexture[0] = new Texture();
-        mTexture[1] = new Texture("../3Dprog22/Assets/snail.bmp");
-        mTexture[2] = new Texture("../3Dprog22/Assets/heightmap.bmp");
+        mTexture[1] = new Texture("../EngineArc/Assets/snail.bmp");
+        mTexture[2] = new Texture("../EngineArc/Assets/heightmap.bmp");
 
         //Set the textures loaded to a texture unit (also called a texture slot)
         glActiveTexture(GL_TEXTURE0);
@@ -168,7 +168,7 @@ void RenderWindow::init() {
         //Vsflate->mMatrix.scale(0.5);
         mVisualObjects.push_back(Vsflate);
 
-        Triangle = new TriangleSurface("../3Dprog22/CompressedFile.txt");
+        Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
         Triangle->init(mMatrixUniform0);
         mVisualObjects.push_back(Triangle);
 
