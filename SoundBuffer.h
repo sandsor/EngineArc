@@ -15,6 +15,3 @@ private:
 
 	std::vector<ALuint> p_SoundEffectBuffers;
 };
-
-
-
