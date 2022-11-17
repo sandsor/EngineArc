@@ -188,6 +188,7 @@ void RenderWindow::render()
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this);
     initializeOpenGLFunctions();
+    handleInput();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -386,31 +387,24 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         {
             mMainWindow->close();       //Shuts down the whole program
         }
-        if(event->key() == Qt::Key_A)
-        {
-            mCurrentCamera->moveRight(-1);
-        }
-        if(event->key() == Qt::Key_S)
-        {
-            mCurrentCamera->moveForward(-1);
+        if (event->key() == Qt::Key_A)
+            mInput.A = true;
+        if (event->key() == Qt::Key_S)
+            mInput.S = true;
+        if (event->key() == Qt::Key_W)
+            mInput.W = true;
+        if (event->key() == Qt::Key_D)
+            mInput.D = true;
+        if (event->key() == Qt::Key_E)
+            mInput.E = true;
+        if (event->key() == Qt::Key_Q)
+            mInput.Q = true;
 
-        }
-        if(event->key() == Qt::Key_W)
-        {
-            mCurrentCamera->moveForward(1);
-        }
-        if(event->key() == Qt::Key_D)
-        {
-            mCurrentCamera->moveRight(1);
-        }
-        if(event->key() == Qt::Key_E)
-        {
-            mCurrentCamera->updateHeigth(1.f);
-        }
-        if(event->key() == Qt::Key_Q)
-        {
-            mCurrentCamera->updateHeigth(-1.f);
-        }
+
+        if (event->key() == Qt::Key_Shift)
+            mInput.LShift = true;
+        if (event->key() == Qt::Key_Control)
+            mInput.LCtrl = true;
         if(event->key() == Qt::Key_X)
         {
             qDebug() << "P =" << (mCurrentCamera->position());
@@ -425,19 +419,77 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         }
 }
 
-void RenderWindow::mousePressEvent(QMouseEvent *event)
+void RenderWindow::keyReleaseEvent(QKeyEvent* event)
 {
+    if (event->key() == Qt::Key_W)
+        mInput.W = false;
+    if (event->key() == Qt::Key_A)
+        mInput.A = false;
+    if (event->key() == Qt::Key_S)
+        mInput.S = false;
+    if (event->key() == Qt::Key_D)
+        mInput.D = false;
 
+    if (event->key() == Qt::Key_Shift)
+        mInput.LShift = false;
+    if (event->key() == Qt::Key_Control)
+        mInput.LCtrl = false;
 
-        if(event->button() == Qt::RightButton)
-        {
-            mCurrentCamera->yaw(1.f);
-        }
-        if(event->button() == Qt::LeftButton)
-        {    //using left and right click for now to move yaw
-            mCurrentCamera->yaw(-1.f);
-        }
+    if (event->key() == Qt::Key_E)
+        mInput.E = false;
+    if (event->key() == Qt::Key_Q)
+        mInput.Q = false;
+}
 
+void RenderWindow::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::RightButton)
+    {
+        mInput.RMB = true;
+    }
+}
+void RenderWindow::mouseMoveEvent(QMouseEvent* event)
+{
+    if (mInput.RMB)
+    {
+        mouseX = event->pos().x() - mouseX;
+        mouseY = event->pos().y() - mouseY;
+        //        qDebug() << mouseX;
+        //        qDebug() << mouseY;
+        mCurrentCamera->yaw(mouseX * 0.1);
+        mCurrentCamera->pitch(mouseY * 0.1);
+    }
+    mouseX = event->pos().x();
+    mouseY = event->pos().y();
+}
+void RenderWindow::handleInput()
+{
+    float speed = 10;
+    if (mInput.LShift)
+        speed = 30;
+    else if (mInput.LCtrl)
+        speed = 0.5;
+
+    if (mInput.W)
+        mCurrentCamera->moveForward(speed);
+    if (mInput.A)
+        mCurrentCamera->moveRight(-speed);
+    if (mInput.S)
+        mCurrentCamera->moveForward(-speed);
+    if (mInput.D)
+        mCurrentCamera->moveRight(speed);
+    if (mInput.E)
+        mCurrentCamera->updateHeigth(speed);
+    if (mInput.Q)
+        mCurrentCamera->updateHeigth(-speed);
+
+}
+void RenderWindow::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::RightButton)
+    {
+        mInput.RMB = false;
+    }
 }
 
 void RenderWindow::spawnrain(){

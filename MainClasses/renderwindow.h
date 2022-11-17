@@ -23,6 +23,8 @@
 #include "rollingball.h"
 #include "generate.h"
 #include "objloader.h"
+#include "Input.h"
+
 
 #include "SoundDevice.h"
 #include "SoundBuffer.h"
@@ -161,6 +163,11 @@ private:
     Texture *mTexture[4]{nullptr};
     Shader *mShaderProgram[4]{nullptr};
 
+    void handleInput();
+
+    int mouseX{ 0 };
+    int mouseY{ 0 };
+    Input mInput;
     Camera *mCurrentCamera;
     float mAspectratio{1.f};
 
@@ -171,11 +178,11 @@ protected:
     // - mouse and keyboard.
     // Uncomment to use (you also have to make the definitions of
     // these functions in the cpp-file to use them of course!)
-    //
+    void mouseReleaseEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent *event) override;
-    //    void mouseMoveEvent(QMouseEvent *event) override{}
+    void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent *event) override;              //the only one we use now
-    //    void keyReleaseEvent(QKeyEvent *event) override{}
+    void keyReleaseEvent(QKeyEvent* event) override;
     //    void wheelEvent(QWheelEvent *event) override{}
 };
 
