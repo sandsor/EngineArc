@@ -165,7 +165,7 @@ void RenderWindow::init() {
 
         //**********Set up camera************
             mCurrentCamera = new Camera();
-             mCurrentCamera->setPosition(gsl::Vector3D( -99.4843 , 660 , -29.8457 ));  //map oversikt
+            mCurrentCamera->setPosition(gsl::Vector3D( -99.4843 , 660 , -29.8457 ));  //map oversikt
              //mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
             mCurrentCamera->yaw(-230.f);
             mCurrentCamera->pitch(36.f);
