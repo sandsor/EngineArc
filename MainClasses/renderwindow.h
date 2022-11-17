@@ -14,20 +14,10 @@
 #include "quadtree.h"
 
 #include "vertex.h"
-#include "xyz.h"
-#include "cube.h"
 #include "trianglesurface.h"
 #include "visualobject.h"
 #include "interactiveobject.h"
 #include "octahedronball.h"
-#include "disc.h"
-#include "house.h"
-#include "trofee.h"
-#include "door.h"
-#include "npc.h"
-#include "visualcurve.h"
-#include "plan.h"
-#include "light.h"
 #include "terrain.h"
 #include "vsflate.h"
 #include "rollingball.h"
@@ -80,26 +70,12 @@ private:
     std::unordered_map<std::string, VisualObject*> mMap;    // alternativ container
     QuadTree* mQuadTre;
 
-   // gsml::QuadTre<std::string, VisualObject*> mQuadTre;
-    //VisualObject* mio;
+    std::vector<RollingBall*> Rain;
     Camera mCamera;
     InteractiveObject* mio;
-    Disc* disc;
-    Trofee* trof1;
-    Trofee* trof2;
-    Trofee* trof3;
-    Trofee* trof4;
-    Trofee* trof5;
-    Trofee* trof6;
-    Trofee* trof7;
-    House* house;
     VSflate* Vsflate;
-    NPC* npc;
-    VisualCurve* curve;
-    VisualCurve* curve1;
     RollingBall* RB;
     Terrain* terrain{nullptr};
-    std::vector<RollingBall*> Rain;
     Generate* map;
     TriangleSurface* Triangle;
     ObjLoader* Obj;

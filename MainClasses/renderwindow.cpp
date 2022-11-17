@@ -13,7 +13,6 @@
 #include "shader.h"
 #include "mainwindow.h"
 #include "logger.h"
-//#include "visualobject.h"
 #include "texture.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
@@ -33,12 +32,11 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
         qDebug() << "Context could not be made - quitting this application";
     }
 
- //     mQuadTre.insert({"map", new QuadTre()})
-        // **************************************
-      Point2D a{-8, -8}, b{8, -8}, c{8, 8}, d{-8, 8}; // må gjøres ordentlig
-      mQuadTre = new QuadTree(a,b,c,d);
-      mQuadTre->subDivide(5);
-      // **************************************
+      //// ***************** QuadTree *********************
+            //Point2D a{-8, -8}, b{8, -8}, c{8, 8}, d{-8, 8}; // må gjøres ordentlig
+            //mQuadTre = new QuadTree(a,b,c,d);
+            //mQuadTre->subDivide(5);
+      //// **************************************
 
     //Make the gameloop timer:
     mRenderTimer = new QTimer(this);
@@ -48,9 +46,6 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
 RenderWindow::~RenderWindow()
 {
-    //cleans up the GPU memory
-    //glDeleteVertexArrays( 1, &mVAO );
-    //glDeleteBuffers( 1, &mVBO );
 
 }
 
@@ -147,22 +142,6 @@ void RenderWindow::init() {
 
         //********************** Making the object to be drawn **********************
 
-
-
-
-
-        //Light:
-//        mLight = new Light();
-//        mLight->init(mMatrixUniform0);
-//        mLight->mMatrix.translate(-1.f, 1.5f, 1.f);
-//        mVisualObjects.push_back(mLight);
-
-//        mLight = new Light(); //[1]
-//        mLight->init(mMatrixUniform0);
-//        mLight->mMatrix.scale(1.f);
-//        mLight->mMatrix.translate(3.0f, 130.f, 0.5f);
-//        mVisualObjects.push_back(mLight);
-
         Vsflate = new VSflate();
         Vsflate->init(mMatrixUniform0);
         //Vsflate->mMatrix.scale(0.5);
@@ -184,73 +163,17 @@ void RenderWindow::init() {
         mVisualObjects.push_back(Obj);
 
 
-
-
-
-
-
-//        temp = new Door(); //[3]
-//        temp->init(mMatrixUniform0);
-//        //temp->mMatrix.translate(-0.2f, -0.2f, 0.5f);
-//        mVisualObjects.push_back(temp);
-
         //**********Set up camera************
             mCurrentCamera = new Camera();
              mCurrentCamera->setPosition(gsl::Vector3D( -99.4843 , 660 , -29.8457 ));  //map oversikt
-             //mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666));
+             //mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
             mCurrentCamera->yaw(-230.f);
             mCurrentCamera->pitch(36.f);
-            //mCurrentCamera->yaw(-5.f);
+
             checkForGLerrors();
 
-//            temp= new OctahedronBall(3);
-//            temp->init(mMatrixUniform0);
-//            mVisualObjects.push_back(temp);
-
-//            mio = new InteractiveObject(); //[1]
-//             mio->init(mMatrixUniform0);
-//             mio->mMatrix.scale(1);
-//             mVisualObjects.push_back(mio);
-//             mMap.insert(std::pair<std::string, VisualObject*>{"mio", mio});
-
-//       terrain = new Terrain();  //[2]
-//       terrain->init(mMatrixUniform0);
-//      // terrain->mMatrix.scale(0.5f);
-//       mVisualObjects.push_back(terrain);
-
-       //map= new Generate();
-
-//       trof1 = new Trofee("pickup", 0.3, -0.1, -0.34);
-//       trof1->init(mMatrixUniform0);
-//       trof1->mMatrix.translate(-3.4f, .3f, -3.5f);
-//       mVisualObjects.push_back(trof1);
-//       mQuadTre->insert(trof1->getPosition2D(), trof1);
-
-//       trof2 = new Trofee("pickup", 0.8, -0.1, -0.34);
-//       trof2->init(mMatrixUniform0);
-//       trof2->mMatrix.translate(-3.2f, .2f, -0.5f);
-//       mVisualObjects.push_back(trof2);
-//       mQuadTre->insert(trof2->getPosition2D(), trof2);
-
-//       trof3 = new Trofee("enemy", 1, -0.1, 1.5);
-//       trof3->init(mMatrixUniform0);
-//       trof3->mMatrix.translate(-3.2f, .3f, 0.9f);
-//       //trof3->mMatrix.scale(3);
-//       mVisualObjects.push_back(trof3);
-//       mQuadTre->insert(trof3->getPosition2D(), trof3);
-
-       //        trof1 = new Trofee("pickup", 0.3, -0.1, -0.34);
-       //        trof2 = new Trofee("pickup", 0.8, -0.1, -0.34);
-       //        trof3 = new Trofee("pickup", 1, -0.1, 1.5);
-
-//    for (auto it=mMap.begin(); it!=mMap.end(); it++)
-//            (*it).second->init(mMmatrixUniform);
-//    for (auto it=mQuadTre.begin(); it!=mQuadTre.end(); it++)
-//            (*it)->init(mMmatrixUniform);
-
-//    mQuadTre->init(mMmatrixUniform);
-      mQuadTre->init(mMatrixUniform0);
-      mVisualObjects.push_back(mQuadTre);
+      //mQuadTre->init(mMatrixUniform0);
+      //mVisualObjects.push_back(mQuadTre);
 
     glBindVertexArray(0);       //unbinds any VertexArray - good practice
     checkForGLerrors();
@@ -260,25 +183,15 @@ void RenderWindow::init() {
 // Called each frame - doing the rendering!!!
 void RenderWindow::render()
 {
-    // Flere matriser her!
-//    mPmatrix->setToIdentity();
-//    mVmatrix->setToIdentity();
-    //mPmatrix->perspective(60, 4.0/3.0, 0.1, 10.0);
-//    mCamera.init(mPmatrixUniform, mVmatrixUniform);
-//    mCamera.perspective(60, 4.0/3.0, 0.1, 10.0);
-
+    //updates camera
     mCurrentCamera->update();
-
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this);
-
     initializeOpenGLFunctions();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //glUseProgram(mShaderProgram->getProgram() );
 
-    //Draws the objects
-        //This should be in a loop!
+    //******************************* Draws the objects ***********************************
         {
             glUseProgram(mShaderProgram[0]->getProgram() );
 
@@ -302,10 +215,6 @@ void RenderWindow::render()
             }
 
         RB->move(1);
-
-
-        //mQuadTre->draw();
-
         }
 
 
@@ -314,12 +223,6 @@ void RenderWindow::render()
    checkForGLerrors();
 
    mContext->swapBuffers(this);
-
-//   float y = terrain->getPositionOnTerrain(mMap["mio"]->mMatrix.getPosition().getX(), mMap["mio"]->mMatrix.getPosition().getZ());
-//       mMap["mio"]->mMatrix.setPosition(mMap["mio"]->mMatrix.getPosition().getX(),y, mMap["mio"]->mMatrix.getPosition().getZ());
-//       qDebug() << "   y  = " << mMap["mio"]->mMatrix.getPosition().getY();
-
-
 }
 
 void RenderWindow::setupPlainShader(int shaderIndex)
@@ -361,8 +264,11 @@ void RenderWindow::setupPhongShader(int shaderIndex)
 void RenderWindow::exposeEvent(QExposeEvent *)
 {
     //if not already initialized - run init() function - happens on program start up
-    if (!mInitialized)
+    if (!mInitialized) 
+    {
         init();
+    }
+
 
     //This is just to support modern screens with "double" pixels (Macs and some 4k Windows laptops)
     const qreal retinaScale = devicePixelRatio();
@@ -475,99 +381,48 @@ void RenderWindow::startOpenGLDebugger()
 // NB - see renderwindow.h for signatures on keyRelease and mouse input
 void RenderWindow::keyPressEvent(QKeyEvent *event)
 {
-    int checked = 0;
-    if (event->key() == Qt::Key_Escape)
-    {
-        mMainWindow->close();       //Shuts down the whole program
-    }
-    //You get the keyboard input like this
+        int checked = 0;
+        if (event->key() == Qt::Key_Escape)
+        {
+            mMainWindow->close();       //Shuts down the whole program
+        }
         if(event->key() == Qt::Key_A)
         {
-           // mMap["mio"]->move(-0.1f, 0.0f, 0.0f);
-            //mMap["mio"]->mMatrix.translateX(-0.1);
             mCurrentCamera->moveRight(-1);
         }
         if(event->key() == Qt::Key_S)
         {
-           // mMap["mio"]->move(0.0f,0.0f,0.1f);
-            //mMap["mio"]->mMatrix.translateZ(0.1);
             mCurrentCamera->moveForward(-1);
 
         }
         if(event->key() == Qt::Key_W)
         {
-           // mMap["mio"]->move(0.0f,0.0f,-0.1f);
-           // mMap["mio"]->mMatrix.translateZ(-0.1);
             mCurrentCamera->moveForward(1);
         }
         if(event->key() == Qt::Key_D)
         {
-           // mMap["mio"]->move(0.1f,0.0f,0.0f);
-           // mMap["mio"]->mMatrix.translateX(0.1);
             mCurrentCamera->moveRight(1);
         }
         if(event->key() == Qt::Key_E)
-            {
-               // mCamera.switchView();
-              //  mMap["door"]->open();
-
+        {
             mCurrentCamera->updateHeigth(1.f);
-            }
+        }
         if(event->key() == Qt::Key_Q)
-            {
-                //npc->switchGraph();
-
+        {
             mCurrentCamera->updateHeigth(-1.f);
-            }
+        }
         if(event->key() == Qt::Key_X)
         {
-//            if (checked==0){
-//            mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666));
-//            mCurrentCamera->yaw(230.f);
-//            mCurrentCamera->pitch(40.f);
-//            checked ++;}
-//            else {
-//            mCurrentCamera->setPosition(gsl::Vector3D(35 , 580 , 83));
-//            mCurrentCamera->yaw(-230.f);
-//            mCurrentCamera->pitch(36.f);
-//            checked--;
-//            }
-                    qDebug() << "P =" << (mCurrentCamera->position());
-
+            qDebug() << "P =" << (mCurrentCamera->position());
         }
-
         if(event->key() == Qt::Key_1)
         {
-
             mySpeaker.Play(sound1);
-          
-
         }
-
         if(event->key() == Qt::Key_2)
         {
-
             mySpeaker.Play(sound2);
-
         }
-
-    //You get the keyboard input like this
-//    if(event->key() == Qt::Key_A)
-//    {
-//        mMainWindow->statusBar()->showMessage(" AAAA");
-//    }
-//    if(event->key() == Qt::Key_S)
-//    {
-//        mMainWindow->statusBar()->showMessage(" SSSS");
-//    }
-
-
-//        auto posisjon = mMap["mio"]->getPosition2D();
-//        auto subtre = mQuadTre->find(posisjon);
-//        for (auto it=subtre->m_sub_objects.begin();it!=subtre->m_sub_objects.end();it++)
-//            if((*it)->m_name == "pickup" || (*it)->m_name == "enemy" )
-//                mio->collision(*it);
-
 }
 
 void RenderWindow::mousePressEvent(QMouseEvent *event)
@@ -610,14 +465,10 @@ void RenderWindow::ToggleWireframe(bool checked)
     if(checked)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-
     }
     else
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-
     }
 }
 
