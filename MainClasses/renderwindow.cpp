@@ -14,6 +14,8 @@
 #include "mainwindow.h"
 #include "logger.h"
 #include "texture.h"
+#include  "entt/entt.hpp"
+
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
@@ -54,7 +56,29 @@ RenderWindow::~RenderWindow()
 void RenderWindow::init() {
 
     mLogger = Logger::getInstance();
+    //Entt system Petter start********************************************
+    entt::entity entity = mRegistry.create();
+    mRegistry.emplace<TransformComponent>(entity);
+    if (mRegistry.all_of<TransformComponent>(entity))
+		TransformComponent& transform=mRegistry.get<TransformComponent>(entity);
+	auto view = mRegistry.view<TransformComponent>();
+    for (auto entity : view)
+    {
+        TransformComponent& transform = view.get<TransformComponent>(entity);
 
+	    
+    }
+    auto group = mRegistry.group<TransformComponent>(entt::get<MeshComponent>);
+    for (auto entity : group)
+    {
+        auto[Transform, mesh]= group.get<TransformComponent, MeshComponent>(entity);
+
+
+    }
+
+
+
+    //Entt system Petter end********************************************
     //Connect the gameloop timer to the render function:
     //This makes our render loop
     connect(mRenderTimer, SIGNAL(timeout()), this, SLOT(render()));

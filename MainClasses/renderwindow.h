@@ -24,11 +24,13 @@
 #include "generate.h"
 #include "objloader.h"
 #include "Input.h"
+#include  "entt/entt.hpp"
 
 
 #include "SoundDevice.h"
 #include "SoundBuffer.h"
 #include "SoundSource.h"
+#include "Component.h"
 
 
 class QOpenGLContext;
@@ -46,8 +48,13 @@ class RenderWindow : public QWindow, protected QOpenGLFunctions_4_1_Core
 public:
     RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow);
     ~RenderWindow() override;
+    //Entt System made by Petter begin
+    entt::registry mRegistry;
+
+    //Entt System made by Petter end
 
     QOpenGLContext *context() { return mContext; }
+    
 
     void exposeEvent(QExposeEvent *) override;  //gets called when app is shown and resized
 
