@@ -14,7 +14,8 @@
 #include "mainwindow.h"
 #include "logger.h"
 #include "texture.h"
-#include  "entt/entt.hpp"
+
+#include "Entity.h"
 
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
@@ -51,17 +52,28 @@ RenderWindow::~RenderWindow()
 
 }
 
+Entity RenderWindow::CreateEntity(const std::string& name)
+{
+    Entity entity = { mRegistry.create(),this };
+    entity.AddComponent<TransformComponent>();
+    auto& tag = entity.AddComponent<TagComponent>();
+    tag.Tag = name.empty() ? "Entity" : name;
+    return entity;
+}
+
 
 // Sets up the general OpenGL stuff and the buffers needed to render a triangle
 void RenderWindow::init() {
 
     mLogger = Logger::getInstance();
     //Entt system Petter start********************************************
-    entt::entity entity = mRegistry.create();
-    mRegistry.emplace<TransformComponent>(entity);
-    if (mRegistry.all_of<TransformComponent>(entity))
-		TransformComponent& transform=mRegistry.get<TransformComponent>(entity);
-	auto view = mRegistry.view<TransformComponent>();
+    
+    auto square = CreateEntity("Square");
+
+  //  mRegistry.emplace<TransformComponent>(entt::entity);
+  //  if (mRegistry.all_of<TransformComponent>(entt::entity))
+		//TransformComponent& transform=mRegistry.get<TransformComponent>(entity);
+	/*auto view = mRegistry.view<TransformComponent>();
     for (auto entity : view)
     {
         TransformComponent& transform = view.get<TransformComponent>(entity);
@@ -74,7 +86,7 @@ void RenderWindow::init() {
         auto[Transform, mesh]= group.get<TransformComponent, MeshComponent>(entity);
 
 
-    }
+    }*/
 
 
 

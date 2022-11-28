@@ -24,20 +24,20 @@
 #include "generate.h"
 #include "objloader.h"
 #include "Input.h"
-#include  "entt/entt.hpp"
+
 
 
 #include "SoundDevice.h"
 #include "SoundBuffer.h"
 #include "SoundSource.h"
 #include "Component.h"
-
+#include  "entt/entt.hpp"
 
 class QOpenGLContext;
 class Shader;
 class MainWindow;
 class Texture;
-
+class Entity;
 /// This inherits from QWindow to get access to the Qt functionality and
 // OpenGL surface.
 // We also inherit from QOpenGLFunctions, to get access to the OpenGL functions
@@ -50,7 +50,8 @@ public:
     ~RenderWindow() override;
     //Entt System made by Petter begin
     entt::registry mRegistry;
-
+    
+    Entity CreateEntity(const std::string& name=std::string());
     //Entt System made by Petter end
 
     QOpenGLContext *context() { return mContext; }
@@ -72,6 +73,7 @@ public:
 
 private slots:
     void render();          //the actual render - function
+    friend class Entity;
 
 private:
 
