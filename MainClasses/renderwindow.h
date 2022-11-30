@@ -69,6 +69,8 @@ public:
 
     void ToggleWireframe(bool checked);
     void ResetCamera();
+    void EntInit(GLint matrixUniform, std::vector<Vertex>Vertices);
+    void EntDraw(GLuint VAO, std::vector<Vertex> Indices);
 
 private slots:
     void render();          //the actual render - function
