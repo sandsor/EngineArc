@@ -20,7 +20,6 @@
 #include "octahedronball.h"
 #include "terrain.h"
 #include "vsflate.h"
-#include "rollingball.h"
 #include "generate.h"
 #include "objloader.h"
 #include "Input.h"
@@ -72,11 +71,9 @@ private:
     std::unordered_map<std::string, VisualObject*> mMap;    // alternativ container
     QuadTree* mQuadTre;
 
-    std::vector<RollingBall*> Rain;
     Camera mCamera;
     InteractiveObject* mio;
     VSflate* Vsflate;
-    RollingBall* RB;
     Terrain* terrain{nullptr};
     Generate* map;
     TriangleSurface* Triangle;

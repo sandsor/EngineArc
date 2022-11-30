@@ -23,7 +23,7 @@ void ObjLoader::ReadFile(std::string filnavn)
              qDebug() << "Could not open file for reading" << QString::fromStdString(filnavn);
      if (inn.is_open())
      {
-         qDebug()<<"Helo";
+         //qDebug()<<"Helo";
 
          std::string OneLine;
          std::string OneWord;
@@ -36,7 +36,7 @@ void ObjLoader::ReadFile(std::string filnavn)
 
          while(std::getline(inn, OneLine))
          {
-             qDebug()<<"inn while loop";
+             //qDebug()<<"inn while loop";
              std::stringstream sStream;
 
              sStream << OneLine;
@@ -49,7 +49,7 @@ void ObjLoader::ReadFile(std::string filnavn)
                  continue;
              if(OneWord == "v")
              {
-                 qDebug()<<"OneWord = v";
+                 //qDebug()<<"OneWord = v";
                  gsl::Vector3D tempVertex;
                  sStream >> OneWord;
                  tempVertex.x = std::stof(OneWord);
@@ -57,7 +57,7 @@ void ObjLoader::ReadFile(std::string filnavn)
                  tempVertex.y = std::stof(OneWord);
                  sStream >> OneWord;
                  tempVertex.z = std::stof(OneWord);
-                    qDebug()<<tempVertex;
+                    //qDebug()<<tempVertex;
                  tempVertices.push_back(tempVertex);
 
                  continue;
@@ -65,7 +65,7 @@ void ObjLoader::ReadFile(std::string filnavn)
              }
              if(OneWord == "vt")
              {
-                 qDebug()<<"OneWord = vt";
+                 //qDebug()<<"OneWord = vt";
                  gsl::Vector2D tempUV;
                  sStream >> OneWord;
                  tempUV.x = std::stof(OneWord);
@@ -78,7 +78,7 @@ void ObjLoader::ReadFile(std::string filnavn)
              }
              if(OneWord == "vn")
              {
-                 qDebug()<<"OneWord = vn";
+                 //qDebug()<<"OneWord = vn";
                  gsl::Vector3D tempNormal;
                  sStream >> OneWord;
                  tempNormal.x = std::stof(OneWord);
@@ -92,7 +92,7 @@ void ObjLoader::ReadFile(std::string filnavn)
              }
              if(OneWord == "f")
              {
-                 qDebug()<<"OneWord = f";
+                 //qDebug()<<"OneWord = f";
                  int index, normal, uv;
                  for(int i = 0; i < 3; i++)
                  {
