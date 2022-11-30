@@ -96,11 +96,11 @@ void MainWindow::on_SpawnRain_toggled(bool checked)
 {
     if(checked)
     {
-        mRenderWindow->spawnrain();
+       //mRenderWindow->spawnrain();
     }
     else
     {
-        mRenderWindow->spawnrain();
+        //mRenderWindow->spawnrain();
     }
 }
 
@@ -118,7 +118,9 @@ void MainWindow::on_pushButton_clicked()
   float z =  ui->textEdit_3->toPlainText().toFloat();
   float y =  ui->textEdit_2->toPlainText().toFloat();
   if(x && y && z)
-        mRenderWindow->spawnrainDrop(x, y, z);
+  { 
+
+  }
 }
 
 

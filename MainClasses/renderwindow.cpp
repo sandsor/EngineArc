@@ -187,11 +187,6 @@ void RenderWindow::init() {
         Triangle->init(mMatrixUniform0);
         mVisualObjects.push_back(Triangle);
 
-        RB = new RollingBall(3, Triangle);
-        RB->init(mMatrixUniform0);
-        //RB->mMatrix.scale(0.5);
-        mVisualObjects.push_back(RB);
-
         Obj = new ObjLoader();
         Obj->init(mMatrixUniform0);
         Obj->mMatrix.translate(200.f,200.f,200.f);
@@ -232,8 +227,8 @@ void RenderWindow::render()
         {
             glUseProgram(mShaderProgram[0]->getProgram() );
 
-
-            for(int x=0; x<=3; x++)
+            qDebug() << mVisualObjects.size();
+            for(int x=0; x < mVisualObjects.size(); x++)
             {
 
                 //send data to shader
@@ -242,16 +237,7 @@ void RenderWindow::render()
                 glUniformMatrix4fv( mMatrixUniform0, 1, GL_TRUE, mVisualObjects[x]->mMatrix.constData());
                 //draw the object
                 mVisualObjects[x]->draw();
-
             }
-
-            for(int i=0; i<Rain.size(); i++)
-            {
-                Rain[i]->draw();
-                Rain[i]->move(1);
-            }
-
-        RB->move(1);
         }
 
 
@@ -528,24 +514,14 @@ void RenderWindow::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
-void RenderWindow::spawnrain(){
-    for (int i=0; i<=10 ;i++ ) {
+void RenderWindow::spawnrain()
+{
 
-
-    RollingBall* temp = new RollingBall(3, Triangle);
-            temp->init(mMatrixUniform0);
-            temp->mMatrix.scale(5);
-            Rain.push_back(temp);
-    }
 }
 
 void RenderWindow::spawnrainDrop(float a, float b, float c)
 {
-    RollingBall* temp = new RollingBall(3, Triangle);
-            temp->init(mMatrixUniform0);
-            temp->mMatrix.scale(5);
-            temp->mMatrix.setPosition(a, b, c);
-            Rain.push_back(temp);
+
 }
 
 void RenderWindow::ToggleWireframe(bool checked)
