@@ -6,7 +6,10 @@
 #include <QTimer>
 #include <QElapsedTimer>
 #include <unordered_map>
-
+//################## Bullet start ######################
+#include "bullet/btBulletDynamicsCommon.h"
+#include <stdio.h>
+//################## Bullet end ########################
 #include <vector>
 //#include "quadtre.h"
 #include "camera.h"
@@ -54,6 +57,16 @@ public:
     //Entt System made by Petter end
 
     QOpenGLContext *context() { return mContext; }
+
+    //################## Bullet start ######################
+
+    btDynamicsWorld* world;
+    btDispatcher* dispathcher;
+    btCollisionConfiguration* collisionConfig;
+    btBroadphaseInterface* broadphase;
+    btConstraintSolver* solver;
+
+    //################## Bullet end ########################
     
 
     void exposeEvent(QExposeEvent *) override;  //gets called when app is shown and resized

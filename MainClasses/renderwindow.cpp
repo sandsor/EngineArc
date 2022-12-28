@@ -88,6 +88,17 @@ void RenderWindow::init() {
 
     }*/
 
+    //################## Bullet start ######################
+
+    collisionConfig = new btDefaultCollisionConfiguration();
+    dispathcher = new btCollisionDispatcher(collisionConfig);
+    broadphase = new btDbvtBroadphase();
+    solver = new btSequentialImpulseConstraintSolver();
+    world = new btDiscreteDynamicsWorld(dispathcher, broadphase, solver, collisionConfig);
+    world->setGravity(btVector3(0, -10, 0));
+
+    //################## Bullet end ########################
+
 
 
     //Entt system Petter end********************************************
@@ -214,6 +225,7 @@ void RenderWindow::init() {
 // Called each frame - doing the rendering!!!
 void RenderWindow::render()
 {
+    world->stepSimulation(1/60);
     //updates camera
     mCurrentCamera->update();
     mTimeStart.restart(); //restart FPS clock
