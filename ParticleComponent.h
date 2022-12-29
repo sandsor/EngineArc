@@ -1,40 +1,46 @@
 #pragma once
+#include<vector2d.h>
+#include<vector3d.h>
+#include<glm/vec4.hpp>
+#include<glm/gtx/compatibility.hpp>
+#include<random>
+
 struct ParticleProperties
 {
-	//glm::vec2 Position;
-	//glm::vec2 Velocity, VelocityVariation;
-	//glm::vec4 ColorBegin, ColorEnd;
-	//float SizeBegin, SizeEnd, SizeVariation;
-	//float LifeTime=1.0f;
+	glm::vec2 Position;
+	glm::vec2 Velocity, VelocityVariation;
+	glm::vec4 ColorBegin, ColorEnd;
+	float SizeBegin, SizeEnd, SizeVariation;
+	float LifeTime=1.0f;
 };
 class ParticleComponent
 {
 public:
 	ParticleComponent();
 
-	void Update();
+	void Update(float deltaTime);
 	void Render();
 
 	void Emit(const ParticleProperties& particleProperties);
 private:
 	struct Particle
 	{
-		//glm::vec2 Position;
-		//glm::vec2 Velocity;
-		//glm::vec4 ColorBegin, ColorEnd;
-		//float rotation
-		//float SizeBegin, SizeEnd;
-		//float LifeTime = 1.0f;
-		//float LifeBeginning = 0.0f;
-		//bool Active = false;
+		glm::vec2 Position;
+		glm::vec2 Velocity;
+		glm::vec4 ColorBegin, ColorEnd;
+		float Rotation;
+		float SizeBegin, SizeEnd;
+		float LifeTime = 1.0f;
+		float LifeRemaining= 0.0f;
+		bool Active = false;
 
 	};
-	//std::vector<Particle> mParticlePool;
-	//uint32_t mPoolIndex = 999;
-	
-	//GLuint mQuadVA = 0;
-	//std::unique_ptr<GLCore::utils::Shader> mParticleShader;
-	//GLint mParticleShaderViewProj, mParticleShaderTransform, mParticleShaderColor;
+	std::vector<Particle> mParticlePool;
+	uint32_t mPoolIndex = 999;
+	//stuff to draw sqare
+	/*GLuint mQuadVA = 0;
+	std::unique_ptr<GLCore::utils::Shader> mParticleShader;
+	GLint mParticleShaderViewProj, mParticleShaderTransform, mParticleShaderColor;*/
 };
 
 //code in renderwindow for this code example:
