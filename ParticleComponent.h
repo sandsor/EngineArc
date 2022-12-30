@@ -1,11 +1,17 @@
 #pragma once
+#include<visualobject.h>
 #include<vector2d.h>
 #include<vector3d.h>
 #include<glm/vec4.hpp>
 #include<glm/gtx/compatibility.hpp>
-#include<random>
+#include <QOpenGLFunctions_4_1_Core>
+#include <QMatrix4x4>
+#include <matrix4x4.h>
+#include <vector>
+#include "vertex.h"
 
-struct ParticleProperties
+
+struct ParticleProperties 
 {
 	glm::vec2 Position;
 	glm::vec2 Velocity, VelocityVariation;
@@ -13,13 +19,15 @@ struct ParticleProperties
 	float SizeBegin, SizeEnd, SizeVariation;
 	float LifeTime=1.0f;
 };
-class ParticleComponent
+class ParticleComponent : public VisualObject
 {
 public:
 	ParticleComponent();
-
+	~ParticleComponent();
 	void Update(float deltaTime);
 	void Render();
+	void init(GLint matrixUniform)override;
+	void draw()override;
 
 	void Emit(const ParticleProperties& particleProperties);
 private:
@@ -38,9 +46,9 @@ private:
 	std::vector<Particle> mParticlePool;
 	uint32_t mPoolIndex = 999;
 	//stuff to draw sqare
-	/*GLuint mQuadVA = 0;
-	std::unique_ptr<GLCore::utils::Shader> mParticleShader;
-	GLint mParticleShaderViewProj, mParticleShaderTransform, mParticleShaderColor;*/
+	GLuint mQuadVA = 0;
+	//std::unique_ptr<GLCore::utils::Shader> mParticleShader;
+	GLint mParticleShaderViewProj, mParticleShaderTransform, mParticleShaderColor;
 };
 
 //code in renderwindow for this code example:
