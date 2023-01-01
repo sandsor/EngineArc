@@ -99,3 +99,21 @@ void Cube::draw()
    glUniformMatrix4fv( mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
    glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
 }
+
+void Cube::ChangeColor(float r, float g, float b)
+{
+    for (int i = 0; i < mVertices.size(); i++)
+    {
+        Vertex tempVertex = mVertices[i];
+        tempVertex.m_normal[0] = r;
+        tempVertex.m_normal[1] = g;
+        tempVertex.m_normal[2] = b;
+        mVertices[i] = tempVertex;
+
+    }
+}
+
+void Cube::move(float x, float y, float z)
+{
+    mPosition.translate(x, y, z);
+}

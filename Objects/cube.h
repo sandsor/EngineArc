@@ -18,6 +18,8 @@ public:
     ~Cube() override;
     void init(GLint matrixUniform) override;
     void draw() override;
+    void ChangeColor(float r, float g, float b);
+    void move(float x, float y, float z)override;
 };
 
 #endif // CUBE_H

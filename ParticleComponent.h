@@ -9,13 +9,15 @@
 #include <matrix4x4.h>
 #include <vector>
 #include "vertex.h"
+#include "cube.h"
 
 
 struct ParticleProperties 
 {
-	glm::vec2 Position;
-	glm::vec2 Velocity, VelocityVariation;
-	glm::vec4 ColorBegin, ColorEnd;
+	glm::vec3 Position;
+	glm::vec3 Velocity, VelocityVariation;
+	glm::vec3 ColorBegin;
+	glm::vec3 ColorEnd;
 	float SizeBegin, SizeEnd, SizeVariation;
 	float LifeTime=1.0f;
 };
@@ -28,16 +30,19 @@ public:
 	void Render();
 	void init(GLint matrixUniform)override;
 	void draw()override;
+	glm::vec3 calculateColor(float mLife, glm::vec3 mColorBegin,glm::vec3 mColorEnd );
 
 	void Emit(const ParticleProperties& particleProperties);
 private:
 	struct Particle
 	{
-		glm::vec2 Position;
-		glm::vec2 Velocity;
-		glm::vec4 ColorBegin, ColorEnd;
+		glm::vec3 Position;
+		glm::vec3 Velocity;
+		glm::vec3 ColorBegin;
+		glm::vec3 ColorEnd;
 		float Rotation;
 		float SizeBegin, SizeEnd;
+		Cube CubeParticle;
 		float LifeTime = 1.0f;
 		float LifeRemaining= 0.0f;
 		bool Active = false;
