@@ -192,6 +192,9 @@ void RenderWindow::init() {
         Obj->mMatrix.translate(200.f,200.f,200.f);
         Obj->mMatrix.scale(10.f);
         mVisualObjects.push_back(Obj);
+        mCube = new Cube();
+        mCube->ChangeColor(1, 0, 0);
+        mVisualObjects.push_back(mCube);
 
 
         //**********Set up camera************

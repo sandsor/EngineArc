@@ -22,6 +22,7 @@
 #include "vsflate.h"
 #include "generate.h"
 #include "objloader.h"
+#include "cube.h"
 #include "Input.h"
 
 
@@ -89,6 +90,7 @@ private:
     Generate* map;
     TriangleSurface* Triangle;
     ObjLoader* Obj;
+    Cube* mCube;
 
     //**************************************************
 

@@ -3,7 +3,8 @@
 
 ParticleComponent::ParticleComponent()
 {
-	mParticlePool.resize(1000);
+	//funker ikke. vikgit?
+	//mParticlePool.resize(1000);
 	mMatrix.setToIdentity();
 
 
@@ -44,14 +45,13 @@ void ParticleComponent::Render()
 		float life = particle.LifeRemaining / particle.LifeTime;
 		glm::vec3 color = calculateColor(life, particle.ColorBegin, particle.ColorEnd);
 
-		float size = glm::lerp(particle.SizeEnd, particle.SizeBegin, life);
+		//float size = glm::lerp(particle.SizeEnd, particle.SizeBegin, life);
 
 		//	// Render
 		particle.CubeParticle.move(particle.Position[0], particle.Position[1], particle.Position[2]);
 		particle.CubeParticle.ChangeColor(color[0],color[1],color[2]);
-			//* glm::rotate(glm::mat4(1.0f), particle.Rotation, { 0.0f, 0.0f, 1.0f })
-			//* glm::scale(glm::mat4(1.0f), { size, size, 1.0f });
-			//glUniformMatrix4fv(mParticleShaderTransform, 1, GL_FALSE, glm::value_ptr(transform));
+		//rotate cube
+		//scale cube
 
 	
 	}
@@ -85,9 +85,9 @@ glm::vec3 ParticleComponent::calculateColor(float mLife, glm::vec3 mColorBegin, 
 	float RedDifference = mColorBegin[0] - mColorEnd[0];
 	float GreenDifference = mColorBegin[1] - mColorEnd[1];
 	float BlueDifference = mColorBegin[2] - mColorEnd[2];
-	color[0] = mColorBegin[0] - (1 - mLife) * mColorEnd[0];
-	color[1] = mColorBegin[1] - (1 - mLife) * mColorEnd[1];
-	color[2] = mColorBegin[2] - (1 - mLife) * mColorEnd[2];
+	color[0] = mColorBegin[0] - (1 - mLife) * RedDifference;
+	color[1] = mColorBegin[1] - (1 - mLife) * GreenDifference;
+	color[2] = mColorBegin[2] - (1 - mLife) * BlueDifference;
 
 	return color;
 }
@@ -114,7 +114,8 @@ glm::vec3 ParticleComponent::calculateColor(float mLife, glm::vec3 mColorBegin, 
 
 	particle.LifeTime = particleProperties.LifeTime;
 	particle.LifeRemaining = particleProperties.LifeTime;
-	particle.SizeBegin = particleProperties.SizeBegin + particleProperties.SizeEnd;
+	particle.SizeBegin = particleProperties.SizeBegin;
+	particle.SizeEnd = particleProperties.SizeEnd;
 
 	mPoolIndex = --mPoolIndex % mParticlePool.size();
 
