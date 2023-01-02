@@ -128,6 +128,8 @@ private:
     QTimer *mRenderTimer{nullptr};           //timer that drives the gameloop
     QElapsedTimer mTimeStart;               //time variable that reads the calculated FPS
 
+    clock_t timer1{ 0 };
+    clock_t timer2{ 0 };
     MainWindow *mMainWindow{nullptr};        //points back to MainWindow to be able to put info in StatusBar
 
     class QOpenGLDebugLogger *mOpenGLDebugLogger{nullptr};  //helper class to get some clean debug info from OpenGL

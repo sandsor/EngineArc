@@ -115,5 +115,33 @@ void Cube::ChangeColor(float r, float g, float b)
 
 void Cube::move(float x, float y, float z)
 {
-    mPosition.translate(x, y, z);
+    mMatrix.translate(x, y, z);
+}
+
+void Cube::Scale(float scale)
+{
+    mMatrix.scale(scale);
+    
+}
+
+void Cube::RotateX(float x)
+{
+    mMatrix.rotateX(x);
+}
+
+void Cube::RotateY(float y)
+{
+    mMatrix.rotateY(y);
+}
+
+void Cube::RotateZ(float z)
+{
+    mMatrix.rotateZ(z);
+}
+
+void Cube::RotateXYZ(float x, float y, float z)
+{
+    RotateX(x);
+    RotateY(y);
+    RotateZ(z);
 }
