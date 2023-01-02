@@ -4,8 +4,9 @@
 ParticleComponent::ParticleComponent()
 {
 	//funker ikke. vikgit?
-	//mParticlePool.resize(1000);
+	
 	mMatrix.setToIdentity();
+	mParticlePool.reserve(1000);
 
 
 }

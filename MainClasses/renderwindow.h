@@ -23,6 +23,7 @@
 #include "generate.h"
 #include "objloader.h"
 #include "cube.h"
+#include "ParticleComponent.h"|
 #include "Input.h"
 
 
@@ -91,6 +92,8 @@ private:
     TriangleSurface* Triangle;
     ObjLoader* Obj;
     Cube* mCube;
+    ParticleComponent* mParticleComponent;
+    ParticleProperties TestParticle;
 
     //**************************************************
 

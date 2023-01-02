@@ -1,56 +1,10 @@
 #include "cube.h"
-
+#include "vector3d.h"
 Cube::Cube()
 {
 
-        mVertices.push_back(Vertex{-0.5,-0.5,-0.5,1,0,0}); //Triangle 1 , Side 1
-        mVertices.push_back(Vertex{-0.5,-0.5,0.5,1,0,0});
-        mVertices.push_back(Vertex{-0.5,0.5,0.5,1,0,0});
-
-        mVertices.push_back(Vertex{0.5,0.5,-0.5,1,0,0}); //Triangle 2
-        mVertices.push_back(Vertex{-0.5,-0.5,-0.5,1,0,0});
-        mVertices.push_back(Vertex{-0.5,0.5,-0.5,1,0,0});
-
-        mVertices.push_back(Vertex{0.5,-0.5,0.5,0,1,0}); //Triangle 3 , Side 2
-        mVertices.push_back(Vertex{-0.5,-0.5,-0.5,0,1,0});
-        mVertices.push_back(Vertex{0.5,-0.5,-0.5,0,1,0});
-
-        mVertices.push_back(Vertex{0.5,0.5,-0.5,0,1,0}); //Triangle 4
-        mVertices.push_back(Vertex{0.5,-0.5,-0.5,0,1,0});
-        mVertices.push_back(Vertex{-0.5,-0.5,-0.5,0,1,0});
-
-        mVertices.push_back(Vertex{-0.5,-0.5,-0.5,0,0,1}); //Triangle 5 , Side 3
-        mVertices.push_back(Vertex{-0.5,0.5,0.5,0,0,1});
-        mVertices.push_back(Vertex{-0.5,0.5,-0.5,0,0,1});
-
-        mVertices.push_back(Vertex{0.5,-0.5,0.5,0,0,1}); //Triangle 6
-        mVertices.push_back(Vertex{-0.5,-0.5,0.5,0,0,1});
-        mVertices.push_back(Vertex{-0.5,-0.5,-0.5,0,0,1});
-
-        mVertices.push_back(Vertex{-0.5,0.5,0.5,1,1,0}); //Triangle 7 , Side 4
-        mVertices.push_back(Vertex{-0.5,-0.5,0.5,1,1,0});
-        mVertices.push_back(Vertex{0.5,-0.5,0.5,1,1,0});
-
-        mVertices.push_back(Vertex{0.5,0.5,0.5,1,1,0}); //Triangle 8
-        mVertices.push_back(Vertex{0.5,-0.5,-0.5,1,1,0});
-        mVertices.push_back(Vertex{0.5,0.5,-0.5,1,1,0});
-
-        mVertices.push_back(Vertex{0.5,-0.5,-0.5,1,0,1}); //Triangle 9 , Side 5
-        mVertices.push_back(Vertex{0.5,0.5,0.5,1,0,1});
-        mVertices.push_back(Vertex{0.5,-0.5,0.5,1,0,1});
-
-        mVertices.push_back(Vertex{0.5,0.5,0.5,1,0,1}); //Triangle 10
-        mVertices.push_back(Vertex{0.5,0.5,-0.5,1,0,1});
-        mVertices.push_back(Vertex{-0.5,0.5,-0.5,1,0,1});
-
-        mVertices.push_back(Vertex{0.5,0.5,0.5,0,1,1}); //Triangle 11 , Side 6
-        mVertices.push_back(Vertex{-0.5,0.5,-0.5,0,1,1});
-        mVertices.push_back(Vertex{-0.5,0.5,0.5,0,1,1});
-
-        mVertices.push_back(Vertex{0.5,0.5,0.5,0,1,1}); //Triangle 12
-        mVertices.push_back(Vertex{-0.5,0.5,0.5,0,1,1});
-        mVertices.push_back(Vertex{0.5,-0.5,0.5,0,1,1});
-        mMatrix.setToIdentity();
+    construct();
+    mMatrix.setToIdentity();
 
 
 }
@@ -60,44 +14,85 @@ Cube::~Cube()
 
 }
 
+void Cube::construct()
+{
+    mVertices.push_back(Vertex{ -0.5, -0.5, -0.5,1,0,0}); // LSW 0
+    mVertices.push_back(Vertex{ 0.5, -0.5, -0.5,0,1,0}); // LSE 1
+    mVertices.push_back(Vertex{ 0.5, -0.5, 0.5,0,0,1}); // LNE 2
+    mVertices.push_back(Vertex{ -0.5, -0.5, 0.5,1,1,0}); // LNW 3
+
+    mVertices.push_back(Vertex{ -0.5, 0.5, -0.5,1,0,1}); // USW 4
+    mVertices.push_back(Vertex{ 0.5, 0.5, -0.5,1,1,0}); // USE 5
+    mVertices.push_back(Vertex{ 0.5, 0.5, 0.5,1,1,1,}); // UNE 6
+    mVertices.push_back(Vertex{ -0.5, 0.5, 0.5,0,0,0 }); // UNW 7
+
+    mIndices =
+    {
+        // Bottom
+        0, 1, 2,
+        0, 2, 3,
+
+        // Sides
+        0, 1, 5,
+        0, 5, 4,
+
+        1, 2, 6,
+        1, 6, 5,
+
+        2, 3, 7,
+        2, 7, 6,
+
+        3, 0, 4,
+        3, 4, 7,
+
+        // Top
+        4, 5, 6,
+        4, 6, 7
+    };
+}
+
 void Cube::init(GLint matrixUniform) {
     mMatrixUniform = matrixUniform;
-
     initializeOpenGLFunctions();
 
-    //Vertex Array Object - VAO
-    glGenVertexArrays( 1, &mVAO );
-    glBindVertexArray( mVAO );
+    glGenVertexArrays(1, &mVAO);
+    glBindVertexArray(mVAO);
 
-    //Vertex Buffer Object to hold vertices - VBO
-    glGenBuffers( 1, &mVBO );
-    glBindBuffer( GL_ARRAY_BUFFER, mVBO );
-
-    glBufferData( GL_ARRAY_BUFFER, mVertices.size()*sizeof( Vertex ), mVertices.data(), GL_STATIC_DRAW );
-
-    // 1rst attribute buffer : vertices
+    glGenBuffers(1, &mVBO);
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT,GL_FALSE, sizeof(Vertex), (GLvoid*)0);
+    glBufferData(GL_ARRAY_BUFFER,      //what buffer type
+        mVertices.size() * sizeof(Vertex),   //how big buffer do we need
+        mVertices.data(),             //the actual vertices
+        GL_STATIC_DRAW        //should the buffer be updated on the GPU
+    );
+
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+    glVertexAttribPointer(
+        0,                  // attribute. No particular reason for 0, but must match layout(location = 0) in the vertex shader.
+        3,                  // size / number of elements of data type
+        GL_FLOAT,           // data type
+        GL_FALSE,           // normalize data
+        sizeof(Vertex),  // stride
+        reinterpret_cast<GLvoid*>(0));          // array buffer offset
     glEnableVertexAttribArray(0);
 
-    // 2nd attribute buffer : colors
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,  sizeof( Vertex ),  (GLvoid*)(3 * sizeof(GLfloat)) );
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
-
-    // 3rd attribute buffer : uvs
-    glVertexAttribPointer(2, 2,  GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)( 6 * sizeof(GLfloat)) );
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid*>(6 * sizeof(GLfloat)));
     glEnableVertexAttribArray(2);
 
-    //enable the matrixUniform
-    // mMatrixUniform = glGetUniformLocation( matrixUniform, "matrix" );
+    glGenBuffers(1, &mEAB);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEAB);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(GLuint), mIndices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
 }
 void Cube::draw()
 {
-   glBindVertexArray( mVAO );
-   glUniformMatrix4fv( mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
-   glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
+    glBindVertexArray(mVAO);
+    //glUniformMatrix4fv( mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
+    glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, nullptr);
+
 }
 
 void Cube::ChangeColor(float r, float g, float b)
@@ -115,12 +110,15 @@ void Cube::ChangeColor(float r, float g, float b)
 
 void Cube::move(float x, float y, float z)
 {
+
     mMatrix.translate(x, y, z);
+    mPosition=mMatrix;
 }
 
 void Cube::Scale(float scale)
 {
     mMatrix.scale(scale);
+    mScale = scale;
     
 }
 

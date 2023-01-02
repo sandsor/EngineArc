@@ -192,13 +192,28 @@ void RenderWindow::init() {
 	Obj->mMatrix.translate(200.f, 200.f, 200.f);
 	Obj->mMatrix.scale(10.f);
 	mVisualObjects.push_back(Obj);
-	mCube = new Cube();
-	//mCube->ChangeColor(1, 0, 0);
-	//mCube->move(20.f, 20.f, 20.f);
-	mCube->Scale(10);
-	mCube->init(mMatrixUniform0);
+	TestParticle.ColorBegin = glm::vec3{ 1,0,0 };
+	TestParticle.ColorEnd = glm::vec3{ 0,0,1 };
+	TestParticle.LifeTime = 2.f;
+	TestParticle.Position = glm::uvec3{ 0,0,0 };
+	TestParticle.SizeBegin = 50;
+	TestParticle.SizeEnd = 1;
+	TestParticle.Velocity = glm::vec3{ 0.5 ,0,0};
+	TestParticle.SizeVariation = 0;
+	TestParticle.VelocityVariation = glm::vec3{ 0 };
+
+	mParticleComponent = new ParticleComponent();
+	//mParticleComponent->Emit(TestParticle);
+	//mVisualObjects.push_back(mParticleComponent);
+	//mCube = new Cube();
+	////mCube->ChangeColor(1, 0, 0);
+	//mCube->move(0, 10, 0);
+	//mCube->Scale(50);
+	//
+	//
+	//mCube->init(mMatrixUniform0);
 	
-	mVisualObjects.push_back(mCube);
+	//mVisualObjects.push_back(mCube);
 
 
 	//**********Set up camera************
@@ -248,6 +263,8 @@ void RenderWindow::render()
 			mVisualObjects[x]->draw();
 		}
 	}
+	
+	
 
 
 	calculateFramerate();

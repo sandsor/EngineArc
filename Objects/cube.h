@@ -16,6 +16,7 @@ class Cube : public VisualObject
 public:
     Cube();
     ~Cube() override;
+    void construct();
     void init(GLint matrixUniform) override;
     void draw() override;
     void ChangeColor(float r, float g, float b);
