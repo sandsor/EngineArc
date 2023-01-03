@@ -7,8 +7,8 @@
 #include <QElapsedTimer>
 #include <unordered_map>
 //################## Bullet start ######################
-#include "bullet/btBulletDynamicsCommon.h"
-#include <stdio.h>
+//#include "bullet/btBulletDynamicsCommon.h"
+//#include <stdio.h>
 //################## Bullet end ########################
 #include <vector>
 //#include "quadtre.h"
@@ -25,6 +25,7 @@
 #include "vsflate.h"
 #include "generate.h"
 #include "objloader.h"
+#include "PerlinGenerator.h"
 #include "Input.h"
 
 
@@ -60,11 +61,11 @@ public:
 
     //################## Bullet start ######################
 
-    btDynamicsWorld* world;
-    btDispatcher* dispathcher;
-    btCollisionConfiguration* collisionConfig;
-    btBroadphaseInterface* broadphase;
-    btConstraintSolver* solver;
+    //btDynamicsWorld* world;
+    //btDispatcher* dispathcher;
+    //btCollisionConfiguration* collisionConfig;
+    //btBroadphaseInterface* broadphase;
+    //btConstraintSolver* solver;
 
     //################## Bullet end ########################
     
@@ -100,6 +101,7 @@ private:
     Generate* map;
     TriangleSurface* Triangle;
     ObjLoader* Obj;
+    PerlinGenerator* Perlin;
 
     //**************************************************
 

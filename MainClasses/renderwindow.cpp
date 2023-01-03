@@ -90,12 +90,12 @@ void RenderWindow::init() {
 
     //################## Bullet start ######################
 
-    collisionConfig = new btDefaultCollisionConfiguration();
-    dispathcher = new btCollisionDispatcher(collisionConfig);
-    broadphase = new btDbvtBroadphase();
-    solver = new btSequentialImpulseConstraintSolver();
-    world = new btDiscreteDynamicsWorld(dispathcher, broadphase, solver, collisionConfig);
-    world->setGravity(btVector3(0, -10, 0));
+    //collisionConfig = new btDefaultCollisionConfiguration();
+    //dispathcher = new btCollisionDispatcher(collisionConfig);
+    //broadphase = new btDbvtBroadphase();
+    //solver = new btSequentialImpulseConstraintSolver();
+    //world = new btDiscreteDynamicsWorld(dispathcher, broadphase, solver, collisionConfig);
+    //world->setGravity(btVector3(0, -10, 0));
 
     //################## Bullet end ########################
 
@@ -204,6 +204,10 @@ void RenderWindow::init() {
         Obj->mMatrix.scale(10.f);
         mVisualObjects.push_back(Obj);
 
+        Perlin = new PerlinGenerator();
+        Perlin->init(mMatrixUniform0);
+        mVisualObjects.push_back(Perlin);
+
 
         //**********Set up camera************
             mCurrentCamera = new Camera();
@@ -225,7 +229,7 @@ void RenderWindow::init() {
 // Called each frame - doing the rendering!!!
 void RenderWindow::render()
 {
-    world->stepSimulation(1/60);
+    /*world->stepSimulation(1/60);*/
     //updates camera
     mCurrentCamera->update();
     mTimeStart.restart(); //restart FPS clock
@@ -235,11 +239,12 @@ void RenderWindow::render()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //******************************* Draws the objects ***********************************
+         Perlin->RandomMove();
+         //******************************* Draws the objects ***********************************
         {
             glUseProgram(mShaderProgram[0]->getProgram() );
 
-            qDebug() << mVisualObjects.size();
+            //qDebug() << mVisualObjects.size();
             for(int x=0; x < mVisualObjects.size(); x++)
             {
 
@@ -251,6 +256,8 @@ void RenderWindow::render()
                 mVisualObjects[x]->draw();
             }
         }
+
+
 
 
    calculateFramerate();
@@ -441,7 +448,19 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
             mInput.LCtrl = true;
         if(event->key() == Qt::Key_X)
         {
-            qDebug() << "P =" << (mCurrentCamera->position());
+            //qDebug() << "P =" << (mCurrentCamera->position());
+            if (Perlin->RandomPoints == false) 
+            {
+                qDebug() << "true";
+                Perlin->RandomPoints = true;
+                Perlin->init(mMatrixUniform0);
+            }
+            else  
+            {
+                qDebug()<<"false";
+                Perlin->RandomPoints = false;
+                Perlin->init(mMatrixUniform0);
+            }
         }
         if(event->key() == Qt::Key_1)
         {
