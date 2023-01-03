@@ -206,6 +206,7 @@ void RenderWindow::init() {
 
         Perlin = new PerlinGenerator();
         Perlin->init(mMatrixUniform0);
+        Perlin->mMatrix.scale(10);
         mVisualObjects.push_back(Perlin);
 
 
@@ -239,7 +240,7 @@ void RenderWindow::render()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-         Perlin->RandomMove();
+
          //******************************* Draws the objects ***********************************
         {
             glUseProgram(mShaderProgram[0]->getProgram() );
@@ -256,7 +257,14 @@ void RenderWindow::render()
                 mVisualObjects[x]->draw();
             }
         }
-
+        if (Perlin->RandomPoints == true) {
+            Perlin->init(mMatrixUniform0);
+            Perlin->RandomMove();
+        }
+        if (Perlin->PerlinActive == true) {
+            Perlin->init(mMatrixUniform0);
+            Perlin->PerlinMove();
+        }
 
 
 
@@ -453,13 +461,25 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
             {
                 qDebug() << "true";
                 Perlin->RandomPoints = true;
-                Perlin->init(mMatrixUniform0);
             }
             else  
             {
                 qDebug()<<"false";
                 Perlin->RandomPoints = false;
-                Perlin->init(mMatrixUniform0);
+            }
+        }
+        if (event->key() == Qt::Key_Space)
+        {
+            //qDebug() << "P =" << (mCurrentCamera->position());
+            if (Perlin->PerlinActive == false)
+            {
+                qDebug() << "true";
+                Perlin->PerlinActive = true;
+            }
+            else
+            {
+                qDebug() << "false";
+                Perlin->PerlinActive = false;
             }
         }
         if(event->key() == Qt::Key_1)
@@ -469,6 +489,27 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         if(event->key() == Qt::Key_2)
         {
             mySpeaker.Play(sound2);
+        }
+        if (event->key() == Qt::Key_Right)
+        {
+            Perlin->maxheight++;
+            Perlin->init(mMatrixUniform0);
+        }
+        if (event->key() == Qt::Key_Left)
+        {
+            Perlin->maxheight--;
+            Perlin->init(mMatrixUniform0);
+        }
+
+        if (event->key() == Qt::Key_Up)
+        {
+            Perlin->perlinrange += 0.1;
+        }
+        if (event->key() == Qt::Key_Down)
+        {
+            if (Perlin->perlinrange > 0.1) {
+                Perlin->perlinrange -= 0.1;
+            }
         }
 }
 

@@ -2,8 +2,8 @@
 
 PerlinGenerator::PerlinGenerator()
 {
-    Generate();
-    mMatrix.setToIdentity();
+    Generate(); // grid
+    mMatrix.setToIdentity(); 
 }
 
 void PerlinGenerator::init(GLint matrixUniform)
@@ -48,10 +48,10 @@ void PerlinGenerator::draw()
 {
     glBindVertexArray(mVAO);
     glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
-    glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, mIndices.size(), GL_UNSIGNED_INT, nullptr); // since im drawing the lines manually, i nead to draw indecies and not verticies
 }
 
-void PerlinGenerator::Generate()
+void PerlinGenerator::Generate() // creates a simple grid able to be manipulated
 {
 
     //gennerating vertex points in a grid system Height * Widht,  values are set in header file.sass
@@ -61,6 +61,7 @@ void PerlinGenerator::Generate()
         }
     }
 
+    //connecting lines too create grid. going through all verticies
     for (float y = 0; y < m_height - 1; y++) {
         for (float x = 0; x < m_width - 1; x++) {
             mIndices.push_back(x + y * m_width);
@@ -72,9 +73,8 @@ void PerlinGenerator::Generate()
             mIndices.push_back(x + (y + 1) * m_width);
         }
     }
-
-    RandomMove();
-
+    //RandomMove();
+    //PerlinMove();
 }
 
 void PerlinGenerator::RandomMove()
@@ -82,7 +82,8 @@ void PerlinGenerator::RandomMove()
     if (RandomPoints) {
         for (int i = 0; i < mVertices.size(); i++) {
             Vertex newPosition = mVertices.at(i);
-            newPosition.m_xyz[1] = rand() % maxheight + minHeight;
+            int range = (maxheight - minHeight) + 1;
+            newPosition.m_xyz[1] = minHeight + int(range * rand() / (RAND_MAX + 1.0));
             float life = (newPosition.m_xyz[1] - minHeight) / (maxheight - minHeight);
             gsl::Vector3D temp = calculateColor(life, gsl::Vector3D(0, 1, 0), gsl::Vector3D(0, 0, 1));
             newPosition.m_normal[0] = temp.getX();
@@ -92,9 +93,45 @@ void PerlinGenerator::RandomMove()
 
         }
     }
+    //newPosition.m_xyz[1] = rand() % maxheight + minHeight;
 }
 
-gsl::Vector3D PerlinGenerator::calculateColor(float mLife, gsl::Vector3D mColorBegin, gsl::Vector3D mColorEnd)
+void PerlinGenerator::PerlinMove()
+{
+    if (PerlinActive) {
+
+        int i = 0;
+        Highestpoint = 0;
+        lowestpoint = 0;
+
+        for (int y = 0; y < m_height; y++) {
+            for (int x = 0; x < m_width; x++) {
+
+                Vertex newPosition = mVertices.at(i);
+                //newPosition.m_xyz[1] = ofNoise(x, y);
+                newPosition.m_xyz[1] = ofNoise( ofMap(x, 0, m_width, 0, perlinrange, false),
+                    ofMap(y, 0, m_height, 0, perlinrange, false))*maxheight;
+
+                if (newPosition.m_xyz[1]< lowestpoint)
+                    lowestpoint = newPosition.m_xyz[1];
+
+                if (newPosition.m_xyz[1] > Highestpoint)
+                    Highestpoint = newPosition.m_xyz[1];
+
+                float life = (newPosition.m_xyz[1] - lowestpoint) / (Highestpoint - lowestpoint);
+                gsl::Vector3D temp = calculateColor(life, gsl::Vector3D(0, 1, 0), gsl::Vector3D(0, 0, 1));
+                newPosition.m_normal[0] = temp.getX();
+                newPosition.m_normal[1] = temp.getY();
+                newPosition.m_normal[2] = temp.getZ();
+
+                mVertices.at(i) = newPosition;
+                i++;
+            }
+        }
+    }
+}
+
+gsl::Vector3D PerlinGenerator::calculateColor(float mLife, gsl::Vector3D mColorBegin, gsl::Vector3D mColorEnd) // got help from teammate
 {
     gsl::Vector3D color;
     float RedDifference = mColorBegin.getX() - mColorEnd.getX();
@@ -107,3 +144,7 @@ gsl::Vector3D PerlinGenerator::calculateColor(float mLife, gsl::Vector3D mColorB
 
     return color;
 }
+
+
+
+
