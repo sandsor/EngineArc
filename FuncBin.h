@@ -63,7 +63,7 @@ namespace {
 
  inline float _slang_library_noise2(float x, float y)
 {
-     constexpr float F2 = 0.366025403f; /* F2 = 0.5*(sqrt(3.0)-1.0) */
+   constexpr float F2 = 0.366025403f; /* F2 = 0.5*(sqrt(3.0)-1.0) */
    constexpr float G2 = 0.211324865f; /* G2 = (3.0-Math.sqrt(3.0))/6.0 */
 
     float n0, n1, n2; /* Noise contributions from the three corners */
