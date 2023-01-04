@@ -187,15 +187,19 @@ void RenderWindow::init() {
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, mTexture[2]->id());
 
+
 	//********************** Making the object to be drawn **********************
-
-
-
 
     Perlin = new PerlinGenerator();
     Perlin->init(mMatrixUniform0);
     Perlin->mMatrix.scale(20);
     mVisualObjects.push_back(Perlin);
+
+    mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+
+
+      //mQuadTre->init(mMatrixUniform0);
+      //mVisualObjects.push_back(mQuadTre);
 
 	Vsflate = new VSflate();
 	Vsflate->init(mMatrixUniform0);
@@ -266,6 +270,9 @@ void RenderWindow::render()
     float deltaTime = (float)(timer1 - timer2) / 1000.f;
     handleInput();
 
+    //n.UpdateBufferStream();
+    mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -296,6 +303,8 @@ void RenderWindow::render()
             Perlin->PerlinMove(deltaTime);
         }
 
+        for (auto n : SoundsToPlay)
+            n->UpdateBufferStream();
 
 	calculateFramerate();
 
@@ -514,11 +523,12 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
         }
         if(event->key() == Qt::Key_1)
         {
-            mySpeaker.Play(sound1);
         }
         if(event->key() == Qt::Key_2)
         {
-            mySpeaker.Play(sound2);
+        }
+        if (event->key() == Qt::Key_3)
+        {
         }
         if (event->key() == Qt::Key_Right)
         {

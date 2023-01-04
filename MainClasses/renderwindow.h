@@ -33,11 +33,8 @@
 
 #include "Input.h"
 
-
-
 #include "SoundDevice.h"
-#include "SoundBuffer.h"
-#include "SoundSource.h"
+#include "AudioObject.h"
 #include "Component.h"
 #include  "entt/entt.hpp"
 
@@ -121,10 +118,7 @@ private:
 
     SoundDevice* mysounddevice = SoundDevice::get(); 
 
-    uint32_t /*ALuint*/ sound1 = SoundBuffer::get()->addSoundEffect("../EngineArc/Assets/spell.ogg");
-    uint32_t /*ALuint*/ sound2 = SoundBuffer::get()->addSoundEffect("../EngineArc/Assets/magicfail.ogg");
-
-    SoundSource mySpeaker;
+    std::vector<AudioObject*> SoundsToPlay;
 
     //**************************************************
 
