@@ -13,7 +13,8 @@ public:
 	void Pause();
 	void Stop();
 	void Resume();
-	//void SetVolume()
+	void SetVolume(float NewVolume);
+	void SetAttenuation(float ReferenceDistance, float Range);
 
 	void UpdateBufferStream();
 
@@ -39,6 +40,8 @@ private:
 
 	float p_Pitch = 1.f;
 	float p_Gain = 1.f;
+	float p_ReferenceDistance = 1.f;
+	float p_MaxRange = 2.f;
 	float p_Position[3] = { 0,0,0 };
 	float p_Velocity[3] = { 0,0,0 };
 	bool p_LoopSound = false;

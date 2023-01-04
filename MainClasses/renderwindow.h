@@ -33,8 +33,11 @@
 
 #include "Input.h"
 
-#include "SoundDevice.h"
+
 #include "AudioObject.h"
+#include "SoundDevice.h"
+#include "SoundBuffer.h"
+#include "SoundSource.h"
 #include "Component.h"
 #include  "entt/entt.hpp"
 
@@ -124,8 +127,11 @@ private:
     //**************************************************
 
     SoundDevice* mysounddevice = SoundDevice::get(); 
-
     std::vector<AudioObject*> SoundsToPlay;
+
+    AudioObject* BackgroundMusic;
+    AudioObject* Monke;
+   
 
     //**************************************************
 

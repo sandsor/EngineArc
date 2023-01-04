@@ -9,7 +9,6 @@ public:
     void GetLocation(float& x, float& y, float& z);
     void SetLocation(const float& x, const float& y, const float& z);
 
-
 private:
     SoundDevice();
     ~SoundDevice();

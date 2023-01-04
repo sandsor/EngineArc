@@ -53,17 +53,40 @@ void AudioObject::LoopSound(bool loop)
 
 void AudioObject::Pause()
 {
-	alSourcePause(p_Source);
+	ALint state;
+	alGetSourcei(p_Source, AL_SOURCE_STATE, &state);
+	if(state == AL_PLAYING)
+		alSourcePause(p_Source);
 }
 
 void AudioObject::Stop()
 {
-	alSourceStop(p_Source);
+	//ALint state;
+	//alGetSourcei(p_Source, AL_SOURCE_STATE, &state);
+	//if (state == AL_PLAYING)
+	//	alSourceStop(p_Source);
 }
 
 void AudioObject::Resume()
 {
-	alSourcePlay(p_Source);
+	ALint state;
+	alGetSourcei(p_Source, AL_SOURCE_STATE, &state);
+	if (state == AL_PAUSED)
+		alSourcePlay(p_Source);
+}
+
+void AudioObject::SetVolume(float NewVolume)
+{
+	p_Gain = NewVolume;
+	alSourcef(p_Source, AL_GAIN, p_Gain);
+}
+
+void AudioObject::SetAttenuation(float ReferenceDistance, float Range)
+{
+	p_ReferenceDistance = ReferenceDistance;
+	p_MaxRange = Range;
+	alSourcef(p_Source, AL_REFERENCE_DISTANCE, p_ReferenceDistance);
+	alSourcef(p_Source, AL_MAX_DISTANCE, p_MaxRange);
 }
 
 void AudioObject::UpdateBufferStream()
@@ -216,5 +239,7 @@ void AudioObject::SetValues()
 	alSourcef(p_Source, AL_GAIN, p_Gain);
 	alSource3f(p_Source, AL_POSITION, p_Position[0], p_Position[1], p_Position[2]);
 	alSource3f(p_Source, AL_VELOCITY, p_Velocity[0], p_Velocity[1], p_Velocity[2]);
+	alSourcef(p_Source, AL_REFERENCE_DISTANCE, p_ReferenceDistance);
+	alSourcef(p_Source, AL_MAX_DISTANCE, p_MaxRange);
 	alSourcei(p_Source, AL_LOOPING, p_LoopSound);
 }
