@@ -25,7 +25,12 @@
 #include "vsflate.h"
 #include "generate.h"
 #include "objloader.h"
+
 #include "PerlinGenerator.h"
+
+#include "cube.h"
+#include "ParticleComponent.h"|
+
 #include "Input.h"
 
 
@@ -52,8 +57,9 @@ public:
     RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow);
     ~RenderWindow() override;
     //Entt System made by Petter begin
+    //This is the Registry of all the entities in the scene
     entt::registry mRegistry;
-    
+    //this is a function that creates a new entity with a given name
     Entity CreateEntity(const std::string& name=std::string());
     //Entt System made by Petter end
 
@@ -83,6 +89,8 @@ public:
 
     void ToggleWireframe(bool checked);
     void ResetCamera();
+    void EntInit(GLint matrixUniform, std::vector<Vertex>Vertices);
+    void EntDraw(GLuint VAO, std::vector<Vertex> Indices);
 
 private slots:
     void render();          //the actual render - function
@@ -101,7 +109,13 @@ private:
     Generate* map;
     TriangleSurface* Triangle;
     ObjLoader* Obj;
+
     PerlinGenerator* Perlin;
+	
+    Cube* mCube;
+    ParticleComponent* mParticleComponent;
+    ParticleProperties TestParticle;
+
 
     //**************************************************
 
