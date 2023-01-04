@@ -29,6 +29,8 @@ private:
 
     int m_width = 20, m_height = 20;
     float lowestpoint = 0, Highestpoint = 0;
+
+    float PerlinTimer = 0;
     
 };
 
