@@ -25,19 +25,16 @@
 #include "vsflate.h"
 #include "generate.h"
 #include "objloader.h"
-<<<<<<< HEAD
+
 #include "PerlinGenerator.h"
-=======
+
 #include "cube.h"
 #include "ParticleComponent.h"|
->>>>>>> Petter
+
 #include "Input.h"
 
-
-
 #include "SoundDevice.h"
-#include "SoundBuffer.h"
-#include "SoundSource.h"
+#include "AudioObject.h"
 #include "Component.h"
 #include  "entt/entt.hpp"
 
@@ -109,22 +106,22 @@ private:
     Generate* map;
     TriangleSurface* Triangle;
     ObjLoader* Obj;
+
 <<<<<<< HEAD
     PerlinGenerator* Perlin;
-=======
+	
     Cube* mCube;
     ParticleComponent* mParticleComponent;
     ParticleProperties TestParticle;
->>>>>>> Petter
+
+=======
+>>>>>>> origin/Fredrik
 
     //**************************************************
 
     SoundDevice* mysounddevice = SoundDevice::get(); 
 
-    uint32_t /*ALuint*/ sound1 = SoundBuffer::get()->addSoundEffect("../EngineArc/Assets/spell.ogg");
-    uint32_t /*ALuint*/ sound2 = SoundBuffer::get()->addSoundEffect("../EngineArc/Assets/magicfail.ogg");
-
-    SoundSource mySpeaker;
+    std::vector<AudioObject*> SoundsToPlay;
 
     //**************************************************
 
@@ -155,10 +152,7 @@ private:
 
     clock_t timer1{ 0 };
     clock_t timer2{ 0 };
-<<<<<<< HEAD
 
-=======
->>>>>>> Petter
     MainWindow *mMainWindow{nullptr};        //points back to MainWindow to be able to put info in StatusBar
 
     class QOpenGLDebugLogger *mOpenGLDebugLogger{nullptr};  //helper class to get some clean debug info from OpenGL

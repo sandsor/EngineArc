@@ -187,29 +187,52 @@ void RenderWindow::init() {
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, mTexture[2]->id());
 
+<<<<<<< HEAD
 	//********************** Making the object to be drawn **********************
 
-<<<<<<< HEAD
-        //Vsflate = new VSflate();
-        //Vsflate->init(mMatrixUniform0);
-        ////Vsflate->mMatrix.scale(0.5);
-        //mVisualObjects.push_back(Vsflate);
 
-        //Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
-        //Triangle->init(mMatrixUniform0);
-        //mVisualObjects.push_back(Triangle);
-
-        //Obj = new ObjLoader();
-        //Obj->init(mMatrixUniform0);
-        //Obj->mMatrix.translate(200.f,200.f,200.f);
-        //Obj->mMatrix.scale(10.f);
-        //mVisualObjects.push_back(Obj);
-
-        Perlin = new PerlinGenerator();
-        Perlin->init(mMatrixUniform0);
-        Perlin->mMatrix.scale(20);
-        mVisualObjects.push_back(Perlin);
 =======
+        //********************** Making the object to be drawn **********************
+
+        Vsflate = new VSflate();
+        Vsflate->init(mMatrixUniform0);
+        //Vsflate->mMatrix.scale(0.5);
+        mVisualObjects.push_back(Vsflate);
+
+
+        Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
+        Triangle->init(mMatrixUniform0);
+        mVisualObjects.push_back(Triangle);
+
+        Obj = new ObjLoader();
+        Obj->init(mMatrixUniform0);
+        Obj->mMatrix.translate(200.f,200.f,200.f);
+        Obj->mMatrix.scale(10.f);
+        mVisualObjects.push_back(Obj);
+
+
+        //**********Set up camera************
+            mCurrentCamera = new Camera();
+             mCurrentCamera->setPosition(gsl::Vector3D( 0,0,0 ));  //map oversikt
+             //mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
+            mCurrentCamera->yaw(-230.f);
+            mCurrentCamera->pitch(36.f);
+>>>>>>> origin/Fredrik
+
+
+<<<<<<< HEAD
+    Perlin = new PerlinGenerator();
+    Perlin->init(mMatrixUniform0);
+    Perlin->mMatrix.scale(20);
+    mVisualObjects.push_back(Perlin);
+=======
+            mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+
+
+      //mQuadTre->init(mMatrixUniform0);
+      //mVisualObjects.push_back(mQuadTre);
+>>>>>>> origin/Fredrik
+
 	Vsflate = new VSflate();
 	Vsflate->init(mMatrixUniform0);
 	//Vsflate->mMatrix.scale(0.5);
@@ -234,7 +257,8 @@ void RenderWindow::init() {
 	TestParticle.SizeVariation = 0;
 	TestParticle.VelocityVariation = glm::vec3{ 0 };
 
-	mParticleComponent = new ParticleComponent();
+	    //mParticleComponent = new ParticleComponent();
+		// 
 	//mParticleComponent->Emit(TestParticle);
 	//mVisualObjects.push_back(mParticleComponent);
 	//mCube = new Cube();
@@ -246,8 +270,6 @@ void RenderWindow::init() {
 	//mCube->init(mMatrixUniform0);
 	
 	//mVisualObjects.push_back(mCube);
->>>>>>> Petter
-
 
 	//**********Set up camera************
 	mCurrentCamera = new Camera();
@@ -269,7 +291,7 @@ void RenderWindow::init() {
 // Called each frame - doing the rendering!!!
 void RenderWindow::render()
 {
-<<<<<<< HEAD
+
     /*world->stepSimulation(1/60);*/
     //updates camera
     mCurrentCamera->update();
@@ -279,20 +301,23 @@ void RenderWindow::render()
     timer1 = clock();
     float deltaTime = (float)(timer1 - timer2) / 1000.f;
     handleInput();
+
+<<<<<<< HEAD
 =======
-	//updates camera
-	mCurrentCamera->update();
-	mTimeStart.restart(); //restart FPS clock
-	mContext->makeCurrent(this);
-	initializeOpenGLFunctions();
-	timer1 = clock();
-	float deltaTime = (float)(timer1 - timer2) / 1000.f;
-	handleInput();
->>>>>>> Petter
+
+    //n.UpdateBufferStream();
+
+
+    mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+
+
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+>>>>>>> origin/Fredrik
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-<<<<<<< HEAD
+
 
          //******************************* Draws the objects ***********************************
         {
@@ -319,27 +344,8 @@ void RenderWindow::render()
             Perlin->PerlinMove(deltaTime);
         }
 
-=======
-	//******************************* Draws the objects ***********************************
-	{
-		glUseProgram(mShaderProgram[0]->getProgram());
-
-		qDebug() << mVisualObjects.size();
-		for (int x = 0; x < mVisualObjects.size(); x++)
-		{
-
-			//send data to shader
-			glUniformMatrix4fv(vMatrixUniform0, 1, GL_TRUE, mCurrentCamera->mViewMatrix.constData());
-			glUniformMatrix4fv(pMatrixUniform0, 1, GL_TRUE, mCurrentCamera->mProjectionMatrix.constData());
-			glUniformMatrix4fv(mMatrixUniform0, 1, GL_TRUE, mVisualObjects[x]->mMatrix.constData());
-			//draw the object
-			mVisualObjects[x]->draw();
-		}
-	}
-	
-	
->>>>>>> Petter
-
+        for (auto n : SoundsToPlay)
+            n->UpdateBufferStream();
 
 	calculateFramerate();
 
@@ -524,7 +530,6 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
 		mInput.Q = true;
 
 
-<<<<<<< HEAD
         if (event->key() == Qt::Key_Shift)
             mInput.LShift = true;
         if (event->key() == Qt::Key_Control)
@@ -559,11 +564,12 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
         }
         if(event->key() == Qt::Key_1)
         {
-            mySpeaker.Play(sound1);
         }
         if(event->key() == Qt::Key_2)
         {
-            mySpeaker.Play(sound2);
+        }
+        if (event->key() == Qt::Key_3)
+        {
         }
         if (event->key() == Qt::Key_Right)
         {
@@ -586,24 +592,7 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
                 Perlin->perlinrange -= 0.1;
             }
         }
-=======
-	if (event->key() == Qt::Key_Shift)
-		mInput.LShift = true;
-	if (event->key() == Qt::Key_Control)
-		mInput.LCtrl = true;
-	if (event->key() == Qt::Key_X)
-	{
-		qDebug() << "P =" << (mCurrentCamera->position());
-	}
-	if (event->key() == Qt::Key_1)
-	{
-		mySpeaker.Play(sound1);
-	}
-	if (event->key() == Qt::Key_2)
-	{
-		mySpeaker.Play(sound2);
-	}
->>>>>>> Petter
+
 }
 
 void RenderWindow::keyReleaseEvent(QKeyEvent* event)

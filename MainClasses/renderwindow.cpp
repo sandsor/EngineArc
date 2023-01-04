@@ -195,7 +195,6 @@ void RenderWindow::init() {
     Perlin->mMatrix.scale(20);
     mVisualObjects.push_back(Perlin);
 
-    mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
 
 
       //mQuadTre->init(mMatrixUniform0);
@@ -241,10 +240,12 @@ void RenderWindow::init() {
 
 	//**********Set up camera************
 	mCurrentCamera = new Camera();
-	mCurrentCamera->setPosition(gsl::Vector3D(-99.4843, 660, -29.8457));  //map oversikt
+	mCurrentCamera->setPosition(gsl::Vector3D(0, 0, 0));  //map oversikt
 	//mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
 	mCurrentCamera->yaw(-230.f);
 	mCurrentCamera->pitch(36.f);
+
+	mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
 
 	checkForGLerrors();
 
