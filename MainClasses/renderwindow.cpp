@@ -189,10 +189,7 @@ void RenderWindow::init() {
 
 	//********************** Making the object to be drawn **********************
 
-
-
-
-    Perlin = new PerlinGenerator();
+	Perlin = new PerlinGenerator();
     Perlin->init(mMatrixUniform0);
     Perlin->mMatrix.scale(20);
     mVisualObjects.push_back(Perlin);
@@ -235,12 +232,27 @@ void RenderWindow::init() {
 	
 	//mVisualObjects.push_back(mCube);
 
-	//**********Set up camera************
+//**********Set up camera************
 	mCurrentCamera = new Camera();
-	mCurrentCamera->setPosition(gsl::Vector3D(-99.4843, 660, -29.8457));  //map oversikt
+	mCurrentCamera->setPosition(gsl::Vector3D(0,0,0));  //map oversikt
 	//mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
 	mCurrentCamera->yaw(-230.f);
 	mCurrentCamera->pitch(36.f);
+
+	//********************** Making Audio Objects **********************
+
+	BackgroundMusic = new AudioObject{"../EngineArc/Assets/the-rhythm-of-the-africa.wav"};
+	SoundsToPlay.push_back(BackgroundMusic);
+	BackgroundMusic->SetVolume(0.7);
+	BackgroundMusic->Play();
+	
+	Monke = new AudioObject{"../EngineArc/Assets/mono_spell.ogg" };
+	SoundsToPlay.push_back(Monke);
+	Monke->SetAttenuation(5.f, 20.f);
+	Monke->LoopSound(true);
+	Monke->Play();
+
+
 
 	checkForGLerrors();
 
@@ -295,6 +307,11 @@ void RenderWindow::render()
             Perlin->init(mMatrixUniform0);
             Perlin->PerlinMove(deltaTime);
         }
+
+	mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+	for (AudioObject* s : SoundsToPlay)
+		s->UpdateBufferStream();
+
 
 
 	calculateFramerate();
@@ -514,12 +531,18 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
         }
         if(event->key() == Qt::Key_1)
         {
-            mySpeaker.Play(sound1);
+            //mySpeaker.Play(sound1);
+			BackgroundMusic->Pause();
         }
         if(event->key() == Qt::Key_2)
         {
-            mySpeaker.Play(sound2);
+            //mySpeaker.Play(sound2);
+			BackgroundMusic->Play();
         }
+		if (event->key() == Qt::Key_3)
+		{
+			//BackgroundMusic->Stop();
+		}
         if (event->key() == Qt::Key_Right)
         {
             Perlin->maxheight++;
