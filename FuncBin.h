@@ -103,7 +103,7 @@ namespace {
     /* Wrap the integer indices at 256, to avoid indexing perm[] out of bounds */
     ii = i % 256;
     jj = j % 256;
-
+    
     /* Calculate the contribution from the three corners */
     t0 = 0.5f - x0 * x0 - y0 * y0;
     if (t0 < 0.0f) n0 = 0.0f;
