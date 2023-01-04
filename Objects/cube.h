@@ -16,8 +16,16 @@ class Cube : public VisualObject
 public:
     Cube();
     ~Cube() override;
+    void construct();
     void init(GLint matrixUniform) override;
     void draw() override;
+    void ChangeColor(float r, float g, float b);
+    void move(float x, float y, float z)override;
+    void Scale(float scale);
+    void RotateX(float x);
+    void RotateY(float y);
+    void RotateZ(float z);
+    void RotateXYZ(float x, float y, float z);
 };
 
 #endif // CUBE_H

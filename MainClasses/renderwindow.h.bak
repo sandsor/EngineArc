@@ -25,12 +25,12 @@
 #include "vsflate.h"
 #include "generate.h"
 #include "objloader.h"
-
+<<<<<<< HEAD
 #include "PerlinGenerator.h"
-
+=======
 #include "cube.h"
 #include "ParticleComponent.h"|
-
+>>>>>>> Petter
 #include "Input.h"
 
 
@@ -109,13 +109,13 @@ private:
     Generate* map;
     TriangleSurface* Triangle;
     ObjLoader* Obj;
-
+<<<<<<< HEAD
     PerlinGenerator* Perlin;
-	
+=======
     Cube* mCube;
     ParticleComponent* mParticleComponent;
     ParticleProperties TestParticle;
-
+>>>>>>> Petter
 
     //**************************************************
 
@@ -155,7 +155,10 @@ private:
 
     clock_t timer1{ 0 };
     clock_t timer2{ 0 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> Petter
     MainWindow *mMainWindow{nullptr};        //points back to MainWindow to be able to put info in StatusBar
 
     class QOpenGLDebugLogger *mOpenGLDebugLogger{nullptr};  //helper class to get some clean debug info from OpenGL
