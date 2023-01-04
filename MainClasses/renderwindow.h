@@ -81,8 +81,15 @@ public:
 
     class Light *mLight{nullptr};
 
-    void spawnrain();
-    void spawnrainDrop(float a, float b, float c);
+    void ActivateRandom();
+    void ActivatePerlin();
+
+    void ChangePerlinSpeed(float sliderpoint);
+
+    void IncreasePerlinRange();
+    void DecreasePerlinRange();
+    void IncreasePerlinHeight();
+    void DecreasePerlinHeight();
 
     void ToggleWireframe(bool checked);
     void ResetCamera();

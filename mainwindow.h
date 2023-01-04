@@ -30,6 +30,15 @@ private slots:
 
         void on_pushButton_2_clicked();
 
+        void on_pushButton_3_clicked();
+
+        void on_pushButton_4_clicked();
+
+        void on_pushButton_5_clicked();
+
+        void on_pushButton_6_clicked();
+
+        void on_horizontalSlider_valueChanged(int value);
 private:
     ///called from the constructor. Initializes different parts of the program.
     void init();

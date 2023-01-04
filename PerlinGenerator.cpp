@@ -110,7 +110,7 @@ void PerlinGenerator::PerlinMove(float deltaTime)
 
                 Vertex newPosition = mVertices.at(i);
                 //newPosition.m_xyz[1] = ofNoise(x, y);
-                newPosition.m_xyz[1] = ofNoise( ofMap(x + (PerlinTimer*5), 0, m_width, 0, perlinrange, false),
+                newPosition.m_xyz[1] = ofNoise( ofMap(x + (PerlinTimer*PerlinSpeed), 0, m_width, 0, perlinrange, false),
                     ofMap(y, 0, m_height, 0, perlinrange, false))*maxheight;
 
                 if (newPosition.m_xyz[1]< lowestpoint)

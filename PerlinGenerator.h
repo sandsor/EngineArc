@@ -24,6 +24,7 @@ public:
     bool RandomPoints = false, PerlinActive = false;
     float minHeight = 1, maxheight = 10;
     float perlinrange = 1;
+    float PerlinSpeed = 5;
 
 private:
 

@@ -200,29 +200,30 @@ void RenderWindow::init() {
       //mQuadTre->init(mMatrixUniform0);
       //mVisualObjects.push_back(mQuadTre);
 
-	Vsflate = new VSflate();
-	Vsflate->init(mMatrixUniform0);
-	//Vsflate->mMatrix.scale(0.5);
-	mVisualObjects.push_back(Vsflate);
+	//Vsflate = new VSflate();
+	//Vsflate->init(mMatrixUniform0);
+	////Vsflate->mMatrix.scale(0.5);
+	//mVisualObjects.push_back(Vsflate);
 
-	Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
-	Triangle->init(mMatrixUniform0);
-	mVisualObjects.push_back(Triangle);
+	//Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
+	//Triangle->init(mMatrixUniform0);
+	//mVisualObjects.push_back(Triangle);
 
-	Obj = new ObjLoader();
-	Obj->init(mMatrixUniform0);
-	Obj->mMatrix.translate(200.f, 200.f, 200.f);
-	Obj->mMatrix.scale(10.f);
-	mVisualObjects.push_back(Obj);
-	TestParticle.ColorBegin = glm::vec3{ 1,0,0 };
-	TestParticle.ColorEnd = glm::vec3{ 0,0,1 };
-	TestParticle.LifeTime = 2.f;
-	TestParticle.Position = glm::uvec3{ 0,0,0 };
-	TestParticle.SizeBegin = 50;
-	TestParticle.SizeEnd = 1;
-	TestParticle.Velocity = glm::vec3{ 0.5 ,0,0};
-	TestParticle.SizeVariation = 0;
-	TestParticle.VelocityVariation = glm::vec3{ 0 };
+	//Obj = new ObjLoader();
+	//Obj->init(mMatrixUniform0);
+	//Obj->mMatrix.translate(200.f, 200.f, 200.f);
+	//Obj->mMatrix.scale(10.f);
+	//mVisualObjects.push_back(Obj);
+
+	//TestParticle.ColorBegin = glm::vec3{ 1,0,0 };
+	//TestParticle.ColorEnd = glm::vec3{ 0,0,1 };
+	//TestParticle.LifeTime = 2.f;
+	//TestParticle.Position = glm::uvec3{ 0,0,0 };
+	//TestParticle.SizeBegin = 50;
+	//TestParticle.SizeEnd = 1;
+	//TestParticle.Velocity = glm::vec3{ 0.5 ,0,0};
+	//TestParticle.SizeVariation = 0;
+	//TestParticle.VelocityVariation = glm::vec3{ 0 };
 
 	    //mParticleComponent = new ParticleComponent();
 		// 
@@ -240,7 +241,7 @@ void RenderWindow::init() {
 
 	//**********Set up camera************
 	mCurrentCamera = new Camera();
-	mCurrentCamera->setPosition(gsl::Vector3D(0, 0, 0));  //map oversikt
+	mCurrentCamera->setPosition(gsl::Vector3D(-415.386, 360, -341.827));  //map oversikt
 	//mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
 	mCurrentCamera->yaw(-230.f);
 	mCurrentCamera->pitch(36.f);
@@ -497,30 +498,12 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
         if(event->key() == Qt::Key_X)
         {
             //qDebug() << "P =" << (mCurrentCamera->position());
-            if (Perlin->RandomPoints == false) 
-            {
-                qDebug() << "true";
-                Perlin->RandomPoints = true;
-            }
-            else  
-            {
-                qDebug()<<"false";
-                Perlin->RandomPoints = false;
-            }
+
         }
         if (event->key() == Qt::Key_Space)
         {
-            //qDebug() << "P =" << (mCurrentCamera->position());
-            if (Perlin->PerlinActive == false)
-            {
-                qDebug() << "true";
-                Perlin->PerlinActive = true;
-            }
-            else
-            {
-                qDebug() << "false";
-                Perlin->PerlinActive = false;
-            }
+            qDebug() << "P =" << (mCurrentCamera->position());
+ 
         }
         if(event->key() == Qt::Key_1)
         {
@@ -531,27 +514,7 @@ void RenderWindow::keyPressEvent(QKeyEvent* event)
         if (event->key() == Qt::Key_3)
         {
         }
-        if (event->key() == Qt::Key_Right)
-        {
-            Perlin->maxheight++;
-            Perlin->init(mMatrixUniform0);
-        }
-        if (event->key() == Qt::Key_Left)
-        {
-            Perlin->maxheight--;
-            Perlin->init(mMatrixUniform0);
-        }
 
-        if (event->key() == Qt::Key_Up)
-        {
-            Perlin->perlinrange += 0.1;
-        }
-        if (event->key() == Qt::Key_Down)
-        {
-            if (Perlin->perlinrange > 0.1) {
-                Perlin->perlinrange -= 0.1;
-            }
-        }
 
 }
 
@@ -628,14 +591,38 @@ void RenderWindow::mouseReleaseEvent(QMouseEvent* event)
 	}
 }
 
-void RenderWindow::spawnrain()
+void RenderWindow::ActivateRandom()
 {
-
+	if (Perlin->RandomPoints == false)
+	{
+		qDebug() << "true";
+		Perlin->RandomPoints = true;
+	}
+	else
+	{
+		qDebug() << "false";
+		Perlin->RandomPoints = false;
+	}
 }
 
-void RenderWindow::spawnrainDrop(float a, float b, float c)
+void RenderWindow::ActivatePerlin()
 {
 
+	if (Perlin->PerlinActive == false)
+	{
+		qDebug() << "true";
+		Perlin->PerlinActive = true;
+	}
+	else
+	{
+		qDebug() << "false";
+		Perlin->PerlinActive = false;
+	}
+}
+
+void RenderWindow::ChangePerlinSpeed(float sliderpoint)
+{
+	Perlin->PerlinSpeed = sliderpoint;
 }
 
 void RenderWindow::ToggleWireframe(bool checked)
@@ -650,9 +637,35 @@ void RenderWindow::ToggleWireframe(bool checked)
 	}
 }
 
+
+void RenderWindow::IncreasePerlinRange()
+{
+	Perlin->perlinrange += 0.1;
+	Perlin->init(mMatrixUniform0);
+}
+void RenderWindow::DecreasePerlinRange()
+{
+	if (Perlin->perlinrange > 0.1) {
+		Perlin->perlinrange -= 0.1;
+	}
+	Perlin->init(mMatrixUniform0);
+}
+void RenderWindow::IncreasePerlinHeight()
+{
+	Perlin->maxheight++;
+	Perlin->init(mMatrixUniform0);
+
+}
+void RenderWindow::DecreasePerlinHeight()
+{
+	Perlin->maxheight--;
+	Perlin->init(mMatrixUniform0);
+}
+
+
 void RenderWindow::ResetCamera()
 {
-	mCurrentCamera->setPosition(gsl::Vector3D(-99.4843, 660, -29.8457));
+	mCurrentCamera->setPosition(gsl::Vector3D(-415.386, 360, -341.827));
 }
 
 void RenderWindow::EntInit(GLint matrixUniform, std::vector<Vertex>Vertices)

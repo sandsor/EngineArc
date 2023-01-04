@@ -96,11 +96,11 @@ void MainWindow::on_SpawnRain_toggled(bool checked)
 {
     if(checked)
     {
-       //mRenderWindow->spawnrain();
+        mRenderWindow->ActivateRandom();
     }
     else
     {
-        //mRenderWindow->spawnrain();
+        mRenderWindow->ActivateRandom();
     }
 }
 
@@ -114,18 +114,46 @@ void MainWindow::on_fileExit_triggered()
 void MainWindow::on_pushButton_clicked()
 {
 
-  float x =  ui->textEdit->toPlainText().toFloat();
-  float z =  ui->textEdit_3->toPlainText().toFloat();
-  float y =  ui->textEdit_2->toPlainText().toFloat();
-  if(x && y && z)
-  { 
+    mRenderWindow->ActivatePerlin();
 
-  }
+  //float x =  ui->textEdit->toPlainText().toFloat();
+  //float z =  ui->textEdit_3->toPlainText().toFloat();
+  //float y =  ui->textEdit_2->toPlainText().toFloat();
+  //if(x && y && z)
+  //{ 
+
+  //}
+
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+    mRenderWindow->ChangePerlinSpeed(value);
 }
 
 
 void MainWindow::on_pushButton_2_clicked()
 {
     mRenderWindow->ResetCamera();
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    mRenderWindow->DecreasePerlinRange();
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    mRenderWindow->IncreasePerlinRange();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    mRenderWindow->DecreasePerlinHeight();
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    mRenderWindow->IncreasePerlinHeight();
 }
 
