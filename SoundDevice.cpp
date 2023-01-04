@@ -8,6 +8,16 @@ SoundDevice* SoundDevice::get()
     return snd_device;
 }
 
+void SoundDevice::GetLocation(float& x, float& y, float& z)
+{
+    alGetListener3f(AL_POSITION, &x, &y, &z);
+}
+
+void SoundDevice::SetLocation(const float& x, const float& y, const float& z)
+{
+    alListener3f(AL_POSITION, x, y, z);
+}
+
 SoundDevice::SoundDevice()
 {
     p_ALCDevice = alcOpenDevice(nullptr); // nullptr = get default device

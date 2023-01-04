@@ -1,5 +1,7 @@
 #include "SoundSource.h"
 #include <iostream>
+//#include "OpenALErrorCheck.h"
+
 
 SoundSource::SoundSource()
 {
@@ -36,4 +38,23 @@ void SoundSource::Play(const ALuint buffer_to_play)
         alGetSourcei(p_Source, AL_SOURCE_STATE, &state);
     }
     std::cout << "done playing sound\n";
+}
+
+void SoundSource::Stop()
+{
+}
+
+void SoundSource::Pause()
+{
+}
+
+void SoundSource::Resume()
+{
+}
+
+void SoundSource::SetPosition(const float& x, const float& y, const float& z)
+{
+    alSource3f(p_Source, AL_POSITION, x, y, z);
+    //AL_CheckAndThrow();
+
 }

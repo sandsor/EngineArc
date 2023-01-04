@@ -183,6 +183,7 @@ void RenderWindow::init() {
         //Vsflate->mMatrix.scale(0.5);
         mVisualObjects.push_back(Vsflate);
 
+
         Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
         Triangle->init(mMatrixUniform0);
         mVisualObjects.push_back(Triangle);
@@ -196,12 +197,15 @@ void RenderWindow::init() {
 
         //**********Set up camera************
             mCurrentCamera = new Camera();
-             mCurrentCamera->setPosition(gsl::Vector3D( -99.4843 , 660 , -29.8457 ));  //map oversikt
+             mCurrentCamera->setPosition(gsl::Vector3D( 0,0,0 ));  //map oversikt
              //mCurrentCamera->setPosition(gsl::Vector3D(0.7 , 20 , 34.1666)); // gammel lokasjon
             mCurrentCamera->yaw(-230.f);
             mCurrentCamera->pitch(36.f);
 
             checkForGLerrors();
+
+            mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+
 
       //mQuadTre->init(mMatrixUniform0);
       //mVisualObjects.push_back(mQuadTre);
@@ -220,6 +224,14 @@ void RenderWindow::render()
     mContext->makeCurrent(this);
     initializeOpenGLFunctions();
     handleInput();
+
+
+    //n.UpdateBufferStream();
+
+
+    mysounddevice->SetLocation(mCurrentCamera->position().getX(), mCurrentCamera->position().getY(), mCurrentCamera->position().getZ());
+
+
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -240,6 +252,8 @@ void RenderWindow::render()
             }
         }
 
+        for (auto n : SoundsToPlay)
+            n->UpdateBufferStream();
 
    calculateFramerate();
 
@@ -433,11 +447,12 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         }
         if(event->key() == Qt::Key_1)
         {
-            mySpeaker.Play(sound1);
         }
         if(event->key() == Qt::Key_2)
         {
-            mySpeaker.Play(sound2);
+        }
+        if (event->key() == Qt::Key_3)
+        {
         }
 }
 
