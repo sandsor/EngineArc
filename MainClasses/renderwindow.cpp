@@ -189,24 +189,24 @@ void RenderWindow::init() {
 
         //********************** Making the object to be drawn **********************
 
-        Vsflate = new VSflate();
-        Vsflate->init(mMatrixUniform0);
-        //Vsflate->mMatrix.scale(0.5);
-        mVisualObjects.push_back(Vsflate);
+        //Vsflate = new VSflate();
+        //Vsflate->init(mMatrixUniform0);
+        ////Vsflate->mMatrix.scale(0.5);
+        //mVisualObjects.push_back(Vsflate);
 
-        Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
-        Triangle->init(mMatrixUniform0);
-        mVisualObjects.push_back(Triangle);
+        //Triangle = new TriangleSurface("../EngineArc/CompressedFile.txt");
+        //Triangle->init(mMatrixUniform0);
+        //mVisualObjects.push_back(Triangle);
 
-        Obj = new ObjLoader();
-        Obj->init(mMatrixUniform0);
-        Obj->mMatrix.translate(200.f,200.f,200.f);
-        Obj->mMatrix.scale(10.f);
-        mVisualObjects.push_back(Obj);
+        //Obj = new ObjLoader();
+        //Obj->init(mMatrixUniform0);
+        //Obj->mMatrix.translate(200.f,200.f,200.f);
+        //Obj->mMatrix.scale(10.f);
+        //mVisualObjects.push_back(Obj);
 
         Perlin = new PerlinGenerator();
         Perlin->init(mMatrixUniform0);
-        Perlin->mMatrix.scale(10);
+        Perlin->mMatrix.scale(20);
         mVisualObjects.push_back(Perlin);
 
 
@@ -236,6 +236,8 @@ void RenderWindow::render()
     mTimeStart.restart(); //restart FPS clock
     mContext->makeCurrent(this);
     initializeOpenGLFunctions();
+    timer1 = clock();
+    float deltaTime = (float)(timer1 - timer2) / 1000.f;
     handleInput();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -263,7 +265,7 @@ void RenderWindow::render()
         }
         if (Perlin->PerlinActive == true) {
             Perlin->init(mMatrixUniform0);
-            Perlin->PerlinMove();
+            Perlin->PerlinMove(deltaTime);
         }
 
 

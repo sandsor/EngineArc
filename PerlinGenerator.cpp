@@ -96,7 +96,7 @@ void PerlinGenerator::RandomMove()
     //newPosition.m_xyz[1] = rand() % maxheight + minHeight;
 }
 
-void PerlinGenerator::PerlinMove()
+void PerlinGenerator::PerlinMove(float deltaTime)
 {
     if (PerlinActive) {
 
@@ -109,7 +109,8 @@ void PerlinGenerator::PerlinMove()
 
                 Vertex newPosition = mVertices.at(i);
                 //newPosition.m_xyz[1] = ofNoise(x, y);
-                newPosition.m_xyz[1] = ofNoise( ofMap(x, 0, m_width, 0, perlinrange, false),
+                qDebug() << deltaTime;
+                newPosition.m_xyz[1] = ofNoise( ofMap(x + (deltaTime*5), 0, m_width, 0, perlinrange, false),
                     ofMap(y, 0, m_height, 0, perlinrange, false))*maxheight;
 
                 if (newPosition.m_xyz[1]< lowestpoint)
