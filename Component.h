@@ -7,7 +7,9 @@
 #include "vertex.h"
 #include <iostream>
 #include <sstream>
+//summary in this file is the different components that will be atached to the entities 
 
+//this component lets us move the entity around in the scene, scale it, rotate it and  change it velocity
 struct TransformComponent
 {
     gsl::Matrix4x4 mPosition;
@@ -27,7 +29,7 @@ struct TransformComponent
 
 
 };
-
+//this component gives the entity a mech with vetecies and indices so the object can be drawn in the scene
 struct  MeshComponent
 {
     std::vector<Vertex> mVertices;
@@ -170,7 +172,7 @@ struct  MeshComponent
 
 
 };
-
+//this component gives the entity a tag that lets it be refrensed in the code more easely 
 struct TagComponent
 {
     std::string Tag;
@@ -181,7 +183,7 @@ struct TagComponent
 	    :Tag(tag){}
 
 };
-
+//this component lets the entity have a spesal mesh loader that can take in an obj-file
 struct ObjLoaderComponent
 {
     ObjLoaderComponent() = default;

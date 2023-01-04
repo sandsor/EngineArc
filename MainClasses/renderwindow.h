@@ -50,8 +50,9 @@ public:
     RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow);
     ~RenderWindow() override;
     //Entt System made by Petter begin
+    //This is the Registry of all the entities in the scene
     entt::registry mRegistry;
-    
+    //this is a function that creates a new entity with a given name
     Entity CreateEntity(const std::string& name=std::string());
     //Entt System made by Petter end
 

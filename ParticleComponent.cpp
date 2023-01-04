@@ -4,9 +4,9 @@
 ParticleComponent::ParticleComponent()
 {
 	//funker ikke. vikgit?
-	
+	Particle particle2;
+	mParticlePool.resize(1000, particle2);
 	mMatrix.setToIdentity();
-	mParticlePool.reserve(1000);
 
 
 }
@@ -49,8 +49,8 @@ void ParticleComponent::Render()
 		//float size = glm::lerp(particle.SizeEnd, particle.SizeBegin, life);
 
 		//	// Render
-		particle.CubeParticle.move(particle.Position[0], particle.Position[1], particle.Position[2]);
-		particle.CubeParticle.ChangeColor(color[0],color[1],color[2]);
+		//particle.CubeParticle.move(particle.Position[0], particle.Position[1], particle.Position[2]);
+		//particle.CubeParticle.ChangeColor(color[0],color[1],color[2]);
 		//rotate cube
 		//scale cube
 
@@ -64,7 +64,7 @@ void ParticleComponent::init(GLint matrixUniform)
 	{
 		if (!particle.Active)
 			continue;
-		particle.CubeParticle.init(matrixUniform);
+		//particle.CubeParticle.init(matrixUniform);
 
 	}
 }
@@ -75,7 +75,7 @@ void ParticleComponent::draw()
 	{
 		if (!particle.Active)
 			continue;
-		particle.CubeParticle.draw();
+		//particle.CubeParticle.draw();
 
 	}
 }
