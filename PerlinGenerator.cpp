@@ -82,7 +82,7 @@ void PerlinGenerator::RandomMove()
     if (RandomPoints) {
         for (int i = 0; i < mVertices.size(); i++) {
             Vertex newPosition = mVertices.at(i);
-            int range = (maxheight - minHeight) + 1;
+            int range = (maxheight - minHeight) + 1; // diffrence between max and min height, the range to create randomnumbers inbetween
             newPosition.m_xyz[1] = minHeight + int(range * rand() / (RAND_MAX + 1.0));
             float life = (newPosition.m_xyz[1] - minHeight) / (maxheight - minHeight);
             gsl::Vector3D temp = calculateColor(life, gsl::Vector3D(0, 1, 0), gsl::Vector3D(0, 0, 1));
@@ -110,7 +110,7 @@ void PerlinGenerator::PerlinMove(float deltaTime)
 
                 Vertex newPosition = mVertices.at(i);
                 //newPosition.m_xyz[1] = ofNoise(x, y);
-                newPosition.m_xyz[1] = ofNoise( ofMap(x + (PerlinTimer*PerlinSpeed), 0, m_width, 0, perlinrange, false),
+                newPosition.m_xyz[1] = ofNoise( ofMap(x + (PerlinTimer*PerlinSpeed), 0, m_width, 0, perlinrange, false), // x goes from 0 too width 
                     ofMap(y, 0, m_height, 0, perlinrange, false))*maxheight;
 
                 if (newPosition.m_xyz[1]< lowestpoint)
@@ -132,7 +132,7 @@ void PerlinGenerator::PerlinMove(float deltaTime)
     }
 }
 
-gsl::Vector3D PerlinGenerator::calculateColor(float mLife, gsl::Vector3D mColorBegin, gsl::Vector3D mColorEnd) // got help from teammate
+gsl::Vector3D PerlinGenerator::calculateColor(float mLife, gsl::Vector3D mColorBegin, gsl::Vector3D mColorEnd) // got help from teammate petter
 {
     gsl::Vector3D color;
     float RedDifference = mColorBegin.getX() - mColorEnd.getX();

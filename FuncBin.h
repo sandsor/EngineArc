@@ -22,7 +22,17 @@
 // 
 //}
 
+// in the func bin lies some code snippets taken from open framework to make the perlin noise smooth
+// found at https://github.com/openframeworks/openFrameworks/blob/master/libs/openFrameworks/utils/ofNoise.h
+//  and     https://github.com/openframeworks/openFrameworks/blob/master/libs/openFrameworks/math/ofMath.cpp
+
 #define OFNOISE_FASTFLOOR(x) ( ((x)>0) ? ((int)x) : (((int)x)-1) )
+
+//* Permutation table.This is just a random jumble of all numbers 0 - 255,
+//* repeated twice to avoid wrapping the index at 255 for each lookup.
+//* This needs to be exactly the same for all instances on all platforms,
+//* so it's easiest to just keep it as inline explicit data.
+//* This also removes the need for any initialisation of this class.
 
 namespace {
     unsigned char perm[512] = { 151,160,137,91,90,15,
@@ -62,13 +72,14 @@ namespace {
 }
 
  inline float _slang_library_noise2(float x, float y)
+//  An implementation typically involves four steps: coordinate skewing, simplicial subdivision, gradient selection, and kernel summation.
 {
    constexpr float F2 = 0.366025403f; /* F2 = 0.5*(sqrt(3.0)-1.0) */
    constexpr float G2 = 0.211324865f; /* G2 = (3.0-Math.sqrt(3.0))/6.0 */
 
     float n0, n1, n2; /* Noise contributions from the three corners */
 
-    /* Skew the input space to determine which simplex cell we're in */
+    /* Skew the input space to determine which simplex cell we're in */  //******* Step 1 *******
     float s = (x + y) * F2; /* Hairy factor for 2D */
     float xs = x + s;
     float ys = y + s;
@@ -85,7 +96,7 @@ namespace {
     int ii, jj;
     float t0, t1, t2;
 
-    /* For the 2D case, the simplex shape is an equilateral triangle. */
+    /* For the 2D case, the simplex shape is an equilateral triangle. */   //******* Step 2 *******
     /* Determine which simplex we are in. */
     int i1, j1; /* Offsets for second (middle) corner of simplex in (i,j) coords */
     if (x0 > y0) { i1 = 1; j1 = 0; } /* lower triangle, XY order: (0,0)->(1,0)->(1,1) */
@@ -104,12 +115,12 @@ namespace {
     ii = i % 256;
     jj = j % 256;
     
-    /* Calculate the contribution from the three corners */
+    /* Calculate the contribution from the three corners */                             //******* Step 3 *******
     t0 = 0.5f - x0 * x0 - y0 * y0;
     if (t0 < 0.0f) n0 = 0.0f;
     else {
         t0 *= t0;
-        n0 = t0 * t0 * grad2(perm[ii + perm[jj]], x0, y0);
+        n0 = t0 * t0 * grad2(perm[ii + perm[jj]], x0, y0); //grad 2 is a gradient calculation to find the steepest points
     }
 
     t1 = 0.5f - x1 * x1 - y1 * y1;
@@ -132,7 +143,7 @@ namespace {
 }
 inline float ofMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp) {
 
-     if (fabs(inputMin - inputMax) < FLT_EPSILON) {
+     if (fabs(inputMin - inputMax) < FLT_EPSILON) {  // flt_epsilon is the smallest float point, fabs is an absolute value
          return outputMin;
      }
      else {
@@ -148,12 +159,12 @@ inline float ofMap(float value, float inputMin, float inputMax, float outputMin,
                  else if (outVal < outputMin)outVal = outputMin;
              }
          }
-         return outVal;
-     }
-
+         return outVal; // the value returned is between outputmin and outputmax, the diffrence is equal to the difrence x has to inputmin and inputmax
+     }                  // for example x= 1, mininput = 0, maxinput = 10  x= 1/10 || x= mininput/maxinput
+                        // minoutput is equal 1 and maxoutput is equal 2 then outvalue will be 1.1
  }
 
  inline float ofNoise(float x, float y) {
-     return _slang_library_noise2(x, y) * 0.5f + 0.5f;
+     return _slang_library_noise2(x, y) * 0.5f + 0.5f; //the floats here makes it more leveled when returning (not necessary)
  }
 
